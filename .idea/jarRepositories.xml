@@ -17,6 +17,11 @@
       <option name="url" value="https://jitpack.io" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="spigot-repo" />
+      <option name="name" value="spigot-repo" />
+      <option name="url" value="https://hub.spigotmc.org/nexus/content/repositories/snapshots/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="nexus" />
       <option name="name" value="nexus" />
       <option name="url" value="https://mvn.lumine.io/repository/maven-public/" />

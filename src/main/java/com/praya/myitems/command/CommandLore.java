@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.command;
 
 import com.praya.agarthalib.utility.TextUtil;
@@ -13,36 +9,35 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class CommandLore extends HandlerCommand implements CommandExecutor {
-    public CommandLore(final MyItems plugin) {
-        super(plugin);
-    }
+   public CommandLore(MyItems plugin) {
+      super(plugin);
+   }
 
-    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-        final CommandManager commandManager = this.plugin.getPluginManager().getCommandManager();
-        if (args.length <= 0) {
-            return true;
-        }
-        final String subCommand = args[0];
-        if (commandManager.checkCommand(subCommand, "Lore_Set")) {
-            final String[] fullArgs = TextUtil.pressList(args, 2);
+   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+      CommandManager commandManager = this.plugin.getPluginManager().getCommandManager();
+      if (args.length > 0) {
+         String subCommand = args[0];
+         String[] fullArgs;
+         if (commandManager.checkCommand(subCommand, "Lore_Set")) {
+            fullArgs = TextUtil.pressList(args, 2);
             return CommandLoreSet.setLore(sender, command, label, fullArgs);
-        }
-        if (commandManager.checkCommand(subCommand, "Lore_Insert")) {
-            final String[] fullArgs = TextUtil.pressList(args, 2);
+         } else if (commandManager.checkCommand(subCommand, "Lore_Insert")) {
+            fullArgs = TextUtil.pressList(args, 2);
             return CommandLoreInsert.insertLore(sender, command, label, fullArgs);
-        }
-        if (commandManager.checkCommand(subCommand, "Lore_Add")) {
-            final String[] fullArgs = TextUtil.pressList(args, 2);
+         } else if (commandManager.checkCommand(subCommand, "Lore_Add")) {
+            fullArgs = TextUtil.pressList(args, 2);
             return CommandLoreAdd.addLore(sender, command, label, fullArgs);
-        }
-        if (commandManager.checkCommand(subCommand, "Lore_Remove")) {
-            final String[] fullArgs = TextUtil.pressList(args, 2);
+         } else if (commandManager.checkCommand(subCommand, "Lore_Remove")) {
+            fullArgs = TextUtil.pressList(args, 2);
             return CommandLoreRemove.removeLore(sender, command, label, fullArgs);
-        }
-        if (commandManager.checkCommand(subCommand, "Lore_Clear")) {
-            final String[] fullArgs = TextUtil.pressList(args, 2);
+         } else if (commandManager.checkCommand(subCommand, "Lore_Clear")) {
+            fullArgs = TextUtil.pressList(args, 2);
             return CommandLoreClear.clearLore(sender, command, label, fullArgs);
-        }
-        return true;
-    }
+         } else {
+            return true;
+         }
+      } else {
+         return true;
+      }
+   }
 }

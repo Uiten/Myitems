@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.command;
 
 import com.praya.agarthalib.utility.TextUtil;
@@ -13,28 +9,29 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class CommandFlag extends HandlerCommand implements CommandExecutor {
-    public CommandFlag(final MyItems plugin) {
-        super(plugin);
-    }
+   public CommandFlag(MyItems plugin) {
+      super(plugin);
+   }
 
-    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-        final CommandManager commandManager = this.plugin.getPluginManager().getCommandManager();
-        if (args.length <= 0) {
-            return true;
-        }
-        final String subCommand = args[0];
-        if (commandManager.checkCommand(subCommand, "Flag_Add")) {
-            final String[] fullArgs = TextUtil.pressList(args, 2);
+   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+      CommandManager commandManager = this.plugin.getPluginManager().getCommandManager();
+      if (args.length > 0) {
+         String subCommand = args[0];
+         String[] fullArgs;
+         if (commandManager.checkCommand(subCommand, "Flag_Add")) {
+            fullArgs = TextUtil.pressList(args, 2);
             return CommandFlagAdd.addFlag(sender, command, label, fullArgs);
-        }
-        if (commandManager.checkCommand(subCommand, "Flag_Remove")) {
-            final String[] fullArgs = TextUtil.pressList(args, 2);
+         } else if (commandManager.checkCommand(subCommand, "Flag_Remove")) {
+            fullArgs = TextUtil.pressList(args, 2);
             return CommandFlagRemove.removeFlag(sender, command, label, fullArgs);
-        }
-        if (commandManager.checkCommand(subCommand, "Flag_Clear")) {
-            final String[] fullArgs = TextUtil.pressList(args, 2);
+         } else if (commandManager.checkCommand(subCommand, "Flag_Clear")) {
+            fullArgs = TextUtil.pressList(args, 2);
             return CommandFlagClear.clearFlag(sender, command, label, fullArgs);
-        }
-        return true;
-    }
+         } else {
+            return true;
+         }
+      } else {
+         return true;
+      }
+   }
 }

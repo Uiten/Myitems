@@ -26,22 +26,22 @@ Suicide:
   KeyLore: "Suicide"
   Command:
     OP:
-      - "suicide"
-
+    - "suicide"
+  
 Heal:
   Consume: true
   KeyLore: "Heal"
   Command:
     OP:
-      - "heal"
-
+    - "heal"
+  
 Buff:
   Consume: true
   KeyLore: "Give all buff for 1 minutes"
   Command:
     Console:
-      - "effect {player} 1 60 2"
-      - "effect {player} 3 60 1"
-      - "effect {player} 5 60 1"
-      - "effect {player} 8 60 2"
-      - "effect {player} 10 60 2"
+    - "effect {player} 1 60 2"
+    - "effect {player} 3 60 1"
+    - "effect {player} 5 60 1"
+    - "effect {player} 8 60 2"
+    - "effect {player} 10 60 2"

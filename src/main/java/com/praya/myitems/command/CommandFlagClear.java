@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.command;
 
 import com.praya.agarthalib.utility.EquipmentUtil;
@@ -25,45 +21,47 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandFlagClear extends HandlerCommand implements CommandExecutor {
-    public CommandFlagClear(final MyItems plugin) {
-        super(plugin);
-    }
+   public CommandFlagClear(MyItems plugin) {
+      super(plugin);
+   }
 
-    protected static final boolean clearFlag(final CommandSender sender, final Command command, final String label, final String[] args) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final PluginManager pluginManager = plugin.getPluginManager();
-        final CommandManager commandManager = pluginManager.getCommandManager();
-        final LanguageManager lang = pluginManager.getLanguageManager();
-        if (!commandManager.checkPermission(sender, "Flag_Clear")) {
-            final String permission = commandManager.getPermission("Flag_Clear");
-            final MessageBuild message = lang.getMessage(sender, "Permission_Lack");
-            message.sendMessage(sender, "permission", permission);
-            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
-            return true;
-        }
-        if (!SenderUtil.isPlayer(sender)) {
-            final MessageBuild message2 = lang.getMessage(sender, "Console_Command_Forbiden");
-            message2.sendMessage(sender);
-            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
-            return true;
-        }
-        final Player player = PlayerUtil.parse(sender);
-        final ItemStack item = Bridge.getBridgeEquipment().getEquipment(player, Slot.MAINHAND);
-        if (!EquipmentUtil.isSolid(item)) {
-            final MessageBuild message3 = lang.getMessage(sender, "Item_MainHand_Empty");
-            message3.sendMessage(sender);
-            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
-            return true;
-        }
-        final MessageBuild message3 = lang.getMessage(sender, "MyItems_ClearFlag_Success");
-        ItemFlagUtil.clearFlag(item);
-        message3.sendMessage(sender);
-        SenderUtil.playSound(sender, SoundEnum.ENTITY_EXPERIENCE_ORB_PICKUP);
-        player.updateInventory();
-        return true;
-    }
+   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+      return clearFlag(sender, command, label, args);
+   }
 
-    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-        return clearFlag(sender, command, label, args);
-    }
+   protected static final boolean clearFlag(CommandSender sender, Command command, String label, String[] args) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      PluginManager pluginManager = plugin.getPluginManager();
+      CommandManager commandManager = pluginManager.getCommandManager();
+      LanguageManager lang = pluginManager.getLanguageManager();
+      if (!commandManager.checkPermission(sender, "Flag_Clear")) {
+         String permission = commandManager.getPermission("Flag_Clear");
+         MessageBuild message = lang.getMessage(sender, "Permission_Lack");
+         message.sendMessage(sender, "permission", permission);
+         SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
+         return true;
+      } else if (!SenderUtil.isPlayer(sender)) {
+         MessageBuild message = lang.getMessage(sender, "Console_Command_Forbiden");
+         message.sendMessage(sender);
+         SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
+         return true;
+      } else {
+         Player player = PlayerUtil.parse(sender);
+         ItemStack item = Bridge.getBridgeEquipment().getEquipment(player, Slot.MAINHAND);
+         MessageBuild message;
+         if (!EquipmentUtil.isSolid(item)) {
+            message = lang.getMessage(sender, "Item_MainHand_Empty");
+            message.sendMessage(sender);
+            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
+            return true;
+         } else {
+            message = lang.getMessage(sender, "MyItems_ClearFlag_Success");
+            ItemFlagUtil.clearFlag(item);
+            message.sendMessage(sender);
+            SenderUtil.playSound(sender, SoundEnum.ENTITY_EXPERIENCE_ORB_PICKUP);
+            player.updateInventory();
+            return true;
+         }
+      }
+   }
 }

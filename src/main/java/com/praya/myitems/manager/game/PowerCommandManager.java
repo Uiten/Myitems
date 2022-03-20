@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.manager.game;
 
 import api.praya.myitems.builder.power.PowerClickEnum;
@@ -12,105 +8,116 @@ import com.praya.myitems.MyItems;
 import com.praya.myitems.builder.handler.HandlerManager;
 import com.praya.myitems.config.game.PowerCommandConfig;
 import com.praya.myitems.config.plugin.MainConfig;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class PowerCommandManager extends HandlerManager {
-    private final PowerCommandConfig powerCommandConfig;
+   private final PowerCommandConfig powerCommandConfig;
 
-    protected PowerCommandManager(final MyItems plugin) {
-        super(plugin);
-        this.powerCommandConfig = new PowerCommandConfig(plugin);
-    }
+   protected PowerCommandManager(MyItems plugin) {
+      super(plugin);
+      this.powerCommandConfig = new PowerCommandConfig(plugin);
+   }
 
-    public final PowerCommandConfig getPowerCommandConfig() {
-        return this.powerCommandConfig;
-    }
+   public final PowerCommandConfig getPowerCommandConfig() {
+      return this.powerCommandConfig;
+   }
 
-    public final Collection<String> getPowerCommandIDs() {
-        return this.getPowerCommandConfig().getPowerCommandIDs();
-    }
+   public final Collection<String> getPowerCommandIDs() {
+      return this.getPowerCommandConfig().getPowerCommandIDs();
+   }
 
-    public final Collection<PowerCommandProperties> getPowerCommandPropertyBuilds() {
-        return this.getPowerCommandConfig().getPowerCommandPropertyBuilds();
-    }
+   public final Collection<PowerCommandProperties> getPowerCommandPropertyBuilds() {
+      return this.getPowerCommandConfig().getPowerCommandPropertyBuilds();
+   }
 
-    public final PowerCommandProperties getPowerCommandProperties(final String id) {
-        return this.getPowerCommandConfig().getPowerCommandProperties(id);
-    }
+   public final PowerCommandProperties getPowerCommandProperties(String id) {
+      return this.getPowerCommandConfig().getPowerCommandProperties(id);
+   }
 
-    public final boolean isPowerCommandExists(final String id) {
-        return this.getPowerCommandProperties(id) != null;
-    }
+   public final boolean isPowerCommandExists(String id) {
+      return this.getPowerCommandProperties(id) != null;
+   }
 
-    public final String getCommandKey(final String powerCommand) {
-        for (final String key : this.getPowerCommandIDs()) {
-            if (key.equalsIgnoreCase(powerCommand)) {
-                return key;
-            }
-        }
-        return null;
-    }
+   public final String getCommandKey(String powerCommand) {
+      Iterator var3 = this.getPowerCommandIDs().iterator();
 
-    @Deprecated
-    public final String getCommandLore(final String powerCommand) {
-        final PowerCommandProperties build = this.getPowerCommandProperties(powerCommand);
-        return (build != null) ? build.getLore() : null;
-    }
+      while(var3.hasNext()) {
+         String key = (String)var3.next();
+         if (key.equalsIgnoreCase(powerCommand)) {
+            return key;
+         }
+      }
 
-    @Deprecated
-    public final List<String> getCommands(final String powerCommand) {
-        final PowerCommandProperties build = this.getPowerCommandProperties(powerCommand);
-        return (build != null) ? build.getCommands() : new ArrayList<String>();
-    }
+      return null;
+   }
 
-    public final String getCommandKeyByLore(final String lore) {
-        final String coloredLore = TextUtil.colorful(lore);
-        for (final String key : this.getPowerCommandIDs()) {
-            final PowerCommandProperties powerCommandProperties = this.getPowerCommandProperties(key);
-            if (powerCommandProperties.getKeyLore().equalsIgnoreCase(coloredLore)) {
-                return key;
-            }
-        }
-        return null;
-    }
+   /** @deprecated */
+   @Deprecated
+   public final String getCommandLore(String powerCommand) {
+      PowerCommandProperties build = this.getPowerCommandProperties(powerCommand);
+      return build != null ? build.getLore() : null;
+   }
 
-    public final String getCommand(final String lore) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final String[] loreCheck = lore.split(MainConfig.KEY_COMMAND);
-        if (loreCheck.length > 1) {
-            final String colorPowerType = mainConfig.getPowerColorType();
-            final String loreStep = loreCheck[1].replaceFirst(colorPowerType, "");
-            return this.getCommandKeyByLore(loreStep);
-        }
-        return null;
-    }
+   /** @deprecated */
+   @Deprecated
+   public final List<String> getCommands(String powerCommand) {
+      PowerCommandProperties build = this.getPowerCommandProperties(powerCommand);
+      return (List)(build != null ? build.getCommands() : new ArrayList());
+   }
 
-    public final String getTextPowerCommand(final PowerClickEnum click, final String keyCommand, double cooldown) {
-        final PowerManager powerManager = this.plugin.getGameManager().getPowerManager();
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final HashMap<String, String> map = new HashMap<String, String>();
-        String format = mainConfig.getPowerFormat();
-        cooldown = MathUtil.roundNumber(cooldown, 1);
-        map.put("click", powerManager.getKeyClick(click));
-        map.put("type", this.getKeyCommand(keyCommand));
-        map.put("cooldown", powerManager.getKeyCooldown(cooldown));
-        format = TextUtil.placeholder(map, format, "<", ">");
-        return format;
-    }
+   public final String getCommandKeyByLore(String lore) {
+      String coloredLore = TextUtil.colorful(lore);
+      Iterator var4 = this.getPowerCommandIDs().iterator();
 
-    public final String getKeyCommand(final String keyCommand) {
-        return this.getKeyCommand(keyCommand, false);
-    }
+      while(var4.hasNext()) {
+         String key = (String)var4.next();
+         PowerCommandProperties powerCommandProperties = this.getPowerCommandProperties(key);
+         if (powerCommandProperties.getKeyLore().equalsIgnoreCase(coloredLore)) {
+            return key;
+         }
+      }
 
-    public final String getKeyCommand(final String keyCommand, final boolean justCheck) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final String key = MainConfig.KEY_COMMAND;
-        final String color = mainConfig.getPowerColorType();
-        final String keylore = this.getCommandLore(keyCommand);
-        return justCheck ? (key + color + keylore) : (key + color + keylore + key + color);
-    }
+      return null;
+   }
+
+   public final String getCommand(String lore) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      String[] loreCheck = lore.split(MainConfig.KEY_COMMAND);
+      if (loreCheck.length > 1) {
+         String colorPowerType = mainConfig.getPowerColorType();
+         String loreStep = loreCheck[1].replaceFirst(colorPowerType, "");
+         return this.getCommandKeyByLore(loreStep);
+      } else {
+         return null;
+      }
+   }
+
+   public final String getTextPowerCommand(PowerClickEnum click, String keyCommand, double cooldown) {
+      PowerManager powerManager = this.plugin.getGameManager().getPowerManager();
+      MainConfig mainConfig = MainConfig.getInstance();
+      HashMap<String, String> map = new HashMap();
+      String format = mainConfig.getPowerFormat();
+      cooldown = MathUtil.roundNumber(cooldown, 1);
+      map.put("click", powerManager.getKeyClick(click));
+      map.put("type", this.getKeyCommand(keyCommand));
+      map.put("cooldown", powerManager.getKeyCooldown(cooldown));
+      format = TextUtil.placeholder(map, format, "<", ">");
+      return format;
+   }
+
+   public final String getKeyCommand(String keyCommand) {
+      return this.getKeyCommand(keyCommand, false);
+   }
+
+   public final String getKeyCommand(String keyCommand, boolean justCheck) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      String key = MainConfig.KEY_COMMAND;
+      String color = mainConfig.getPowerColorType();
+      String keylore = this.getCommandLore(keyCommand);
+      return justCheck ? key + color + keylore : key + color + keylore + key + color;
+   }
 }

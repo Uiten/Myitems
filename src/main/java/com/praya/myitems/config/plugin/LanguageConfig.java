@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.config.plugin;
 
 import com.praya.agarthalib.utility.FileUtil;
@@ -12,181 +8,204 @@ import com.praya.myitems.manager.plugin.PlaceholderManager;
 import com.praya.myitems.manager.plugin.PluginManager;
 import core.praya.agarthalib.builder.main.LanguageBuild;
 import core.praya.agarthalib.builder.message.MessageBuild;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class LanguageConfig extends HandlerConfig {
-    private final HashMap<String, LanguageBuild> mapLanguage;
+   private final HashMap<String, LanguageBuild> mapLanguage = new HashMap();
 
-    public LanguageConfig(final MyItems plugin) {
-        super(plugin);
-        this.mapLanguage = new HashMap<String, LanguageBuild>();
-        this.setup();
-    }
+   public LanguageConfig(MyItems plugin) {
+      super(plugin);
+      this.setup();
+   }
 
-    public final Collection<String> getLanguageIDs() {
-        return this.mapLanguage.keySet();
-    }
+   public final Collection<String> getLanguageIDs() {
+      return this.mapLanguage.keySet();
+   }
 
-    public final Collection<LanguageBuild> getLanguageBuilds() {
-        return this.mapLanguage.values();
-    }
+   public final Collection<LanguageBuild> getLanguageBuilds() {
+      return this.mapLanguage.values();
+   }
 
-    public final LanguageBuild getLanguageBuild(final String id) {
-        if (id != null) {
-            for (final String key : this.getLanguageIDs()) {
-                if (key.equalsIgnoreCase(id)) {
-                    return this.mapLanguage.get(key);
-                }
+   public final LanguageBuild getLanguageBuild(String id) {
+      if (id != null) {
+         Iterator var3 = this.getLanguageIDs().iterator();
+
+         while(var3.hasNext()) {
+            String key = (String)var3.next();
+            if (key.equalsIgnoreCase(id)) {
+               return (LanguageBuild)this.mapLanguage.get(key);
             }
-        }
-        return null;
-    }
+         }
+      }
 
-    public final LanguageBuild getLanguage(final String id) {
-        if (id != null) {
-            final String[] parts = id.split("_");
-            int size;
-            for (int length = size = parts.length; size > 0; --size) {
-                final StringBuilder builder = new StringBuilder();
-                for (int index = 0; index < size; ++index) {
-                    final String component = parts[index];
-                    builder.append(component);
-                    if (index != size - 1) {
-                        builder.append("_");
-                    }
-                    final String identifier = builder.toString();
-                    final LanguageBuild languageBuild = this.getLanguageBuild(identifier);
-                    if (languageBuild != null) {
-                        return languageBuild;
-                    }
-                }
+      return null;
+   }
+
+   public final LanguageBuild getLanguage(String id) {
+      if (id != null) {
+         String[] parts = id.split("_");
+         int length = parts.length;
+
+         for(int size = length; size > 0; --size) {
+            StringBuilder builder = new StringBuilder();
+
+            for(int index = 0; index < size; ++index) {
+               String component = parts[index];
+               builder.append(component);
+               if (index != size - 1) {
+                  builder.append("_");
+               }
+
+               String identifier = builder.toString();
+               LanguageBuild languageBuild = this.getLanguageBuild(identifier);
+               if (languageBuild != null) {
+                  return languageBuild;
+               }
             }
-        }
-        return this.getLanguageBuild("en");
-    }
+         }
+      }
 
-    public final MessageBuild getMessageBuild(final String id, final String key) {
-        if (id != null && key != null) {
-            final LanguageBuild languageBuild = this.getLanguageBuild(id);
-            if (languageBuild != null) {
-                return languageBuild.getMessage(key);
+      return this.getLanguageBuild("en");
+   }
+
+   public final MessageBuild getMessageBuild(String id, String key) {
+      if (id != null && key != null) {
+         LanguageBuild languageBuild = this.getLanguageBuild(id);
+         if (languageBuild != null) {
+            return languageBuild.getMessage(key);
+         }
+      }
+
+      return new MessageBuild();
+   }
+
+   public final MessageBuild getMessage(String id, String key) {
+      if (id != null) {
+         String[] parts = id.split("_");
+         int length = parts.length;
+
+         for(int size = length; size > 0; --size) {
+            StringBuilder builder = new StringBuilder();
+
+            for(int index = 0; index < size; ++index) {
+               String component = parts[index];
+               builder.append(component);
+               if (index != size - 1) {
+                  builder.append("_");
+               }
+
+               String identifier = builder.toString();
+               LanguageBuild languageBuild = this.getLanguageBuild(identifier);
+               if (languageBuild != null) {
+                  MessageBuild message = languageBuild.getMessage(key);
+                  if (message.isSet()) {
+                     return message;
+                  }
+               }
             }
-        }
-        return new MessageBuild();
-    }
+         }
+      }
 
-    public final MessageBuild getMessage(final String id, final String key) {
-        if (id != null) {
-            final String[] parts = id.split("_");
-            int size;
-            for (int length = size = parts.length; size > 0; --size) {
-                final StringBuilder builder = new StringBuilder();
-                for (int index = 0; index < size; ++index) {
-                    final String component = parts[index];
-                    builder.append(component);
-                    if (index != size - 1) {
-                        builder.append("_");
-                    }
-                    final String identifier = builder.toString();
-                    final LanguageBuild languageBuild = this.getLanguageBuild(identifier);
-                    if (languageBuild != null) {
-                        final MessageBuild message = languageBuild.getMessage(key);
-                        if (message.isSet()) {
-                            return message;
-                        }
-                    }
-                }
-            }
-        }
-        return this.getMessageBuild("en", key);
-    }
+      return this.getMessageBuild("en", key);
+   }
 
-    public final void setup() {
-        this.moveOldFile();
-        this.reset();
-        this.loadConfig();
-    }
+   public final void setup() {
+      this.moveOldFile();
+      this.reset();
+      this.loadConfig();
+   }
 
-    private final void reset() {
-        this.mapLanguage.clear();
-    }
+   private final void reset() {
+      this.mapLanguage.clear();
+   }
 
-    private final void loadConfig() {
-        final PluginManager pluginManager = this.plugin.getPluginManager();
-        final DataManager dataManager = pluginManager.getDataManager();
-        final String pathFolder = dataManager.getPath("Path_Folder_Language");
-        final File folder = FileUtil.getFile(this.plugin, pathFolder);
-        final List<String> listPath = dataManager.getListPath("Path_File_Language");
-        for (final String pathFile : listPath) {
-            final File file = FileUtil.getFile(this.plugin, pathFile);
-            final String name = file.getName().toLowerCase();
-            final String id = name.split(Pattern.quote("."))[0];
-            final String locale = id.startsWith("lang_") ? id.replaceFirst("lang_", "") : "en";
-            if (!file.exists()) {
-                FileUtil.saveResource(this.plugin, pathFile);
-            }
-            final FileConfiguration config = FileUtil.getFileConfigurationResource(this.plugin, pathFile);
-            final LanguageBuild language = this.loadLanguage(locale, config);
-            this.mapLanguage.put(locale, language);
-        }
-        File[] listFiles;
-        for (int length = (listFiles = folder.listFiles()).length, i = 0; i < length; ++i) {
-            final File file2 = listFiles[i];
-            final String name2 = file2.getName().toLowerCase();
-            final String id2 = name2.split(Pattern.quote("."))[0];
-            final String locale2 = id2.startsWith("lang_") ? id2.replaceFirst("lang_", "") : "en";
-            final FileConfiguration config2 = FileUtil.getFileConfiguration(file2);
-            final LanguageBuild language2 = this.loadLanguage(locale2, config2);
-            final LanguageBuild localeLang = this.getLanguage(locale2);
-            if (localeLang != null) {
-                localeLang.mergeLanguage(language2);
-            } else {
-                this.mapLanguage.put(id2, language2);
-            }
-        }
-    }
+   private final void loadConfig() {
+      PluginManager pluginManager = this.plugin.getPluginManager();
+      DataManager dataManager = pluginManager.getDataManager();
+      String pathFolder = dataManager.getPath("Path_Folder_Language");
+      File folder = FileUtil.getFile(this.plugin, pathFolder);
+      List<String> listPath = dataManager.getListPath("Path_File_Language");
+      Iterator var7 = listPath.iterator();
 
-    private final LanguageBuild loadLanguage(final String locale, final FileConfiguration config) {
-        final PluginManager pluginManager = this.plugin.getPluginManager();
-        final PlaceholderManager placeholderManager = pluginManager.getPlaceholderManager();
-        final HashMap<String, MessageBuild> mapLanguage = new HashMap<String, MessageBuild>();
-        for (final String path : config.getKeys(true)) {
-            final String key = path.replace(".", "_");
-            if (config.isString(path)) {
-                final String text = config.getString(path);
-                final List<String> list = new ArrayList<String>();
-                list.add(text);
-                final List<String> listPlaceholder = placeholderManager.localPlaceholder(list);
-                final MessageBuild messages = new MessageBuild(listPlaceholder);
-                mapLanguage.put(key, messages);
-            } else {
-                if (!config.isList(path)) {
-                    continue;
-                }
-                final List<String> list2 = config.getStringList(path);
-                final List<String> listPlaceholder2 = placeholderManager.localPlaceholder(list2);
-                final MessageBuild messages2 = new MessageBuild(listPlaceholder2);
-                mapLanguage.put(key, messages2);
-            }
-        }
-        return new LanguageBuild(locale, mapLanguage);
-    }
+      String name;
+      String id;
+      while(var7.hasNext()) {
+         String pathFile = (String)var7.next();
+         File file = FileUtil.getFile(this.plugin, pathFile);
+         name = file.getName().toLowerCase();
+         name = name.split(Pattern.quote("."))[0];
+         id = name.startsWith("lang_") ? name.replaceFirst("lang_", "") : "en";
+         if (!file.exists()) {
+            FileUtil.saveResource(this.plugin, pathFile);
+         }
 
-    private final void moveOldFile() {
-        final String pathSource = "language.yml";
-        final String pathTarget = "Language/lang_en.yml";
-        final File fileSource = FileUtil.getFile(this.plugin, "language.yml");
-        final File fileTarget = FileUtil.getFile(this.plugin, "Language/lang_en.yml");
-        if (fileSource.exists()) {
-            FileUtil.moveFileSilent(fileSource, fileTarget);
-        }
-    }
+         FileConfiguration config = FileUtil.getFileConfigurationResource(this.plugin, pathFile);
+         LanguageBuild language = this.loadLanguage(id, config);
+         this.mapLanguage.put(id, language);
+      }
+
+      File[] var19;
+      int var18 = (var19 = folder.listFiles()).length;
+
+      for(int var17 = 0; var17 < var18; ++var17) {
+         File file = var19[var17];
+         name = file.getName().toLowerCase();
+         id = name.split(Pattern.quote("."))[0];
+         String locale = id.startsWith("lang_") ? id.replaceFirst("lang_", "") : "en";
+         FileConfiguration config = FileUtil.getFileConfiguration(file);
+         LanguageBuild language = this.loadLanguage(locale, config);
+         LanguageBuild localeLang = this.getLanguage(locale);
+         if (localeLang != null) {
+            localeLang.mergeLanguage(language);
+         } else {
+            this.mapLanguage.put(id, language);
+         }
+      }
+
+   }
+
+   private final LanguageBuild loadLanguage(String locale, FileConfiguration config) {
+      PluginManager pluginManager = this.plugin.getPluginManager();
+      PlaceholderManager placeholderManager = pluginManager.getPlaceholderManager();
+      HashMap<String, MessageBuild> mapLanguage = new HashMap();
+      Iterator var7 = config.getKeys(true).iterator();
+
+      while(var7.hasNext()) {
+         String path = (String)var7.next();
+         String key = path.replace(".", "_");
+         if (config.isString(path)) {
+            String text = config.getString(path);
+            List<String> list = new ArrayList();
+            list.add(text);
+            List<String> listPlaceholder = placeholderManager.localPlaceholder((List)list);
+            MessageBuild messages = new MessageBuild(listPlaceholder);
+            mapLanguage.put(key, messages);
+         } else if (config.isList(path)) {
+            List<String> list = config.getStringList(path);
+            List<String> listPlaceholder = placeholderManager.localPlaceholder(list);
+            MessageBuild messages = new MessageBuild(listPlaceholder);
+            mapLanguage.put(key, messages);
+         }
+      }
+
+      return new LanguageBuild(locale, mapLanguage);
+   }
+
+   private final void moveOldFile() {
+      String pathSource = "language.yml";
+      String pathTarget = "Language/lang_en.yml";
+      File fileSource = FileUtil.getFile(this.plugin, "language.yml");
+      File fileTarget = FileUtil.getFile(this.plugin, "Language/lang_en.yml");
+      if (fileSource.exists()) {
+         FileUtil.moveFileSilent(fileSource, fileTarget);
+      }
+
+   }
 }

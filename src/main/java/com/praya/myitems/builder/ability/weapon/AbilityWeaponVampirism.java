@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.ability.weapon;
 
 import api.praya.myitems.builder.ability.AbilityWeapon;
@@ -20,145 +16,147 @@ import core.praya.agarthalib.bridge.unity.Bridge;
 import core.praya.agarthalib.builder.message.MessageBuild;
 import core.praya.agarthalib.enums.branch.ParticleEnum;
 import core.praya.agarthalib.enums.branch.SoundEnum;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.projectiles.ProjectileSource;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
 public class AbilityWeaponVampirism extends AbilityWeapon implements AbilityWeaponAttributeBaseDamage {
-    private static final String ABILITY_ID = "Vampirism";
+   private static final String ABILITY_ID = "Vampirism";
 
-    private AbilityWeaponVampirism(final MyItems plugin, final String id) {
-        super(plugin, id);
-    }
+   private AbilityWeaponVampirism(MyItems plugin, String id) {
+      super(plugin, id);
+   }
 
-    public static final AbilityWeaponVampirism getInstance() {
-        return AbilityVampirismHelper.instance;
-    }
+   public static final AbilityWeaponVampirism getInstance() {
+      return AbilityWeaponVampirism.AbilityVampirismHelper.instance;
+   }
 
-    @Override
-    public String getKeyLore() {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        return mainConfig.getAbilityWeaponIdentifierVampirism();
-    }
+   public String getKeyLore() {
+      MainConfig mainConfig = MainConfig.getInstance();
+      return mainConfig.getAbilityWeaponIdentifierVampirism();
+   }
 
-    @Override
-    public List<String> getDescription() {
-        return null;
-    }
+   public List<String> getDescription() {
+      return null;
+   }
 
-    @Override
-    public int getMaxGrade() {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Vampirism");
-        return abilityWeaponProperties.getMaxGrade();
-    }
+   public int getMaxGrade() {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Vampirism");
+      return abilityWeaponProperties.getMaxGrade();
+   }
 
-    @Override
-    public double getBaseBonusDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Vampirism");
-        final double baseBonusDamage = grade * abilityWeaponProperties.getScaleBaseBonusDamage();
-        return baseBonusDamage;
-    }
+   public double getBaseBonusDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Vampirism");
+      double baseBonusDamage = (double)grade * abilityWeaponProperties.getScaleBaseBonusDamage();
+      return baseBonusDamage;
+   }
 
-    @Override
-    public double getBasePercentDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Vampirism");
-        final double basePercentDamage = grade * abilityWeaponProperties.getScaleBasePercentDamage();
-        return basePercentDamage;
-    }
+   public double getBasePercentDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Vampirism");
+      double basePercentDamage = (double)grade * abilityWeaponProperties.getScaleBasePercentDamage();
+      return basePercentDamage;
+   }
 
-    @Override
-    public void cast(final Entity caster, final Entity target, final int grade, final double damage) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final PluginManager pluginManager = plugin.getPluginManager();
-        final LanguageManager lang = pluginManager.getLanguageManager();
-        final MainConfig mainConfig = MainConfig.getInstance();
-        LivingEntity attacker;
-        if (caster instanceof Projectile) {
-            final Projectile projectile = (Projectile) caster;
-            final ProjectileSource projectileSource = projectile.getShooter();
-            if (projectileSource == null || !(projectileSource instanceof LivingEntity)) {
-                return;
-            }
-            attacker = (LivingEntity) projectileSource;
-        } else {
-            attacker = (LivingEntity) caster;
-        }
-        if (target instanceof LivingEntity) {
-            final LivingEntity victims = (LivingEntity) target;
-            final Location location = attacker.getLocation();
-            final double drain = this.getDrain(attacker, victims, grade, damage);
-            final double attackerNewHealth = this.getAttackerNewHealth(attacker, victims, drain);
-            final MessageBuild messageAttacker = lang.getMessage(attacker, "Ability_Vampirism_Attacker");
-            final MessageBuild messageVictims = lang.getMessage(victims, "Ability_Vampirism_Victims");
-            final Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
-            final HashMap<String, String> mapPlaceholder = new HashMap<String, String>();
-            mapPlaceholder.put("health", String.valueOf(MathUtil.roundNumber(drain)));
-            Bridge.getBridgeParticle().playParticle(players, ParticleEnum.HEART, location, 10, 0.25, 0.25, 0.25, 0.10000000149011612);
-            if (EntityUtil.isPlayer(attacker)) {
-                final Player playerAttacker = PlayerUtil.parse(attacker);
-                messageAttacker.sendMessage(playerAttacker, mapPlaceholder);
-                Bridge.getBridgeSound().playSound(playerAttacker, location, SoundEnum.ENTITY_WITCH_DRINK, 1.0f, 1.0f);
-            }
-            if (EntityUtil.isPlayer(victims)) {
-                final Player playerVictims = PlayerUtil.parse(victims);
-                messageVictims.sendMessage(playerVictims, mapPlaceholder);
-                Bridge.getBridgeSound().playSound(playerVictims, location, SoundEnum.ENTITY_WITCH_DRINK, 1.0f, 1.0f);
-            }
-            EntityUtil.setHealth(attacker, attackerNewHealth);
-        }
-    }
+   public void cast(Entity caster, Entity target, int grade, double damage) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      PluginManager pluginManager = plugin.getPluginManager();
+      LanguageManager lang = pluginManager.getLanguageManager();
+      MainConfig mainConfig = MainConfig.getInstance();
+      LivingEntity attacker;
+      if (caster instanceof Projectile) {
+         Projectile projectile = (Projectile)caster;
+         ProjectileSource projectileSource = projectile.getShooter();
+         if (projectileSource == null || !(projectileSource instanceof LivingEntity)) {
+            return;
+         }
 
-    private final double getDrain(final LivingEntity attacker, final LivingEntity victims, final int grade, final double damage) {
-        final double attackerHealth = attacker.getHealth();
-        final double attackerMaxHealth = attacker.getMaxHealth();
-        final int maxGrade = this.getMaxGrade();
-        double drain = damage * grade / maxGrade;
-        if (victims.getHealth() - drain < 0.0) {
-            drain = victims.getHealth();
-        }
-        if (!(victims instanceof Player)) {
-            drain /= 2.0;
-        }
-        if (attackerHealth + drain > attackerMaxHealth) {
-            drain = attackerMaxHealth - attackerHealth;
-        }
-        return drain;
-    }
+         attacker = (LivingEntity)projectileSource;
+      } else {
+         attacker = (LivingEntity)caster;
+      }
 
-    private final double getAttackerNewHealth(final LivingEntity attacker, final LivingEntity victims, final double drain) {
-        final double attackerHealth = attacker.getHealth();
-        final double attackerMaxHealth = attacker.getMaxHealth();
-        if (attackerHealth + drain > attackerMaxHealth) {
-            return attackerMaxHealth;
-        }
-        return attackerHealth + drain;
-    }
+      if (target instanceof LivingEntity) {
+         LivingEntity victims = (LivingEntity)target;
+         Location location = attacker.getLocation();
+         double drain = this.getDrain(attacker, victims, grade, damage);
+         double attackerNewHealth = this.getAttackerNewHealth(attacker, victims, drain);
+         MessageBuild messageAttacker = lang.getMessage(attacker, "Ability_Vampirism_Attacker");
+         MessageBuild messageVictims = lang.getMessage(victims, "Ability_Vampirism_Victims");
+         Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
+         HashMap<String, String> mapPlaceholder = new HashMap();
+         mapPlaceholder.put("health", String.valueOf(MathUtil.roundNumber(drain)));
+         Bridge.getBridgeParticle().playParticle(players, ParticleEnum.HEART, location, 10, 0.25D, 0.25D, 0.25D, 0.10000000149011612D);
+         Player playerVictims;
+         if (EntityUtil.isPlayer(attacker)) {
+            playerVictims = PlayerUtil.parse(attacker);
+            messageAttacker.sendMessage(playerVictims, mapPlaceholder);
+            Bridge.getBridgeSound().playSound(playerVictims, location, SoundEnum.ENTITY_WITCH_DRINK, 1.0F, 1.0F);
+         }
 
-    private static class AbilityVampirismHelper {
-        private static final AbilityWeaponVampirism instance;
+         if (EntityUtil.isPlayer(victims)) {
+            playerVictims = PlayerUtil.parse(victims);
+            messageVictims.sendMessage(playerVictims, mapPlaceholder);
+            Bridge.getBridgeSound().playSound(playerVictims, location, SoundEnum.ENTITY_WITCH_DRINK, 1.0F, 1.0F);
+         }
 
-        static {
-            final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-            instance = new AbilityWeaponVampirism(plugin, "Vampirism");
-        }
-    }
+         EntityUtil.setHealth(attacker, attackerNewHealth);
+      }
+
+   }
+
+   private final double getDrain(LivingEntity attacker, LivingEntity victims, int grade, double damage) {
+      double attackerHealth = attacker.getHealth();
+      double attackerMaxHealth = attacker.getMaxHealth();
+      int maxGrade = this.getMaxGrade();
+      double drain = damage * (double)grade / (double)maxGrade;
+      if (victims.getHealth() - drain < 0.0D) {
+         drain = victims.getHealth();
+      }
+
+      if (!(victims instanceof Player)) {
+         drain /= 2.0D;
+      }
+
+      if (attackerHealth + drain > attackerMaxHealth) {
+         drain = attackerMaxHealth - attackerHealth;
+      }
+
+      return drain;
+   }
+
+   private final double getAttackerNewHealth(LivingEntity attacker, LivingEntity victims, double drain) {
+      double attackerHealth = attacker.getHealth();
+      double attackerMaxHealth = attacker.getMaxHealth();
+      return attackerHealth + drain > attackerMaxHealth ? attackerMaxHealth : attackerHealth + drain;
+   }
+
+   // $FF: synthetic method
+   AbilityWeaponVampirism(MyItems var1, String var2, AbilityWeaponVampirism var3) {
+      this(var1, var2);
+   }
+
+   private static class AbilityVampirismHelper {
+      private static final AbilityWeaponVampirism instance;
+
+      static {
+         MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+         instance = new AbilityWeaponVampirism(plugin, "Vampirism", (AbilityWeaponVampirism)null);
+      }
+   }
 }

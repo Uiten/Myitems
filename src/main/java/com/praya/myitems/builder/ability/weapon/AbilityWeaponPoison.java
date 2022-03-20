@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.ability.weapon;
 
 import api.praya.myitems.builder.ability.AbilityWeapon;
@@ -18,118 +14,121 @@ import com.praya.myitems.manager.game.GameManager;
 import core.praya.agarthalib.bridge.unity.Bridge;
 import core.praya.agarthalib.enums.branch.ParticleEnum;
 import core.praya.agarthalib.enums.branch.SoundEnum;
+import java.util.Collection;
+import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Collection;
-import java.util.List;
-
 public class AbilityWeaponPoison extends AbilityWeapon implements AbilityWeaponAttributeBaseDamage, AbilityWeaponAttributeEffect {
-    private static final String ABILITY_ID = "Poison";
+   private static final String ABILITY_ID = "Poison";
 
-    private AbilityWeaponPoison(final MyItems plugin, final String id) {
-        super(plugin, id);
-    }
+   private AbilityWeaponPoison(MyItems plugin, String id) {
+      super(plugin, id);
+   }
 
-    public static final AbilityWeaponPoison getInstance() {
-        return AbilityPoisonHelper.instance;
-    }
+   public static final AbilityWeaponPoison getInstance() {
+      return AbilityWeaponPoison.AbilityPoisonHelper.instance;
+   }
 
-    @Override
-    public String getKeyLore() {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        return mainConfig.getAbilityWeaponIdentifierPoison();
-    }
+   public String getKeyLore() {
+      MainConfig mainConfig = MainConfig.getInstance();
+      return mainConfig.getAbilityWeaponIdentifierPoison();
+   }
 
-    @Override
-    public List<String> getDescription() {
-        return null;
-    }
+   public List<String> getDescription() {
+      return null;
+   }
 
-    @Override
-    public int getMaxGrade() {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Poison");
-        return abilityWeaponProperties.getMaxGrade();
-    }
+   public int getMaxGrade() {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Poison");
+      return abilityWeaponProperties.getMaxGrade();
+   }
 
-    @Override
-    public double getBaseBonusDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Poison");
-        final double baseBonusDamage = grade * abilityWeaponProperties.getScaleBaseBonusDamage();
-        return baseBonusDamage;
-    }
+   public double getBaseBonusDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Poison");
+      double baseBonusDamage = (double)grade * abilityWeaponProperties.getScaleBaseBonusDamage();
+      return baseBonusDamage;
+   }
 
-    @Override
-    public double getBasePercentDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Poison");
-        final double basePercentDamage = grade * abilityWeaponProperties.getScaleBasePercentDamage();
-        return basePercentDamage;
-    }
+   public double getBasePercentDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Poison");
+      double basePercentDamage = (double)grade * abilityWeaponProperties.getScaleBasePercentDamage();
+      return basePercentDamage;
+   }
 
-    @Override
-    public int getEffectDuration(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Poison");
-        final int baseDuration = abilityWeaponProperties.getBaseDurationEffect();
-        final int scaleDuration = abilityWeaponProperties.getScaleDurationEffect();
-        int duration = abilityWeaponProperties.getTotalDuration(grade);
-        for (int amplifier = 0; duration > baseDuration + scaleDuration * (5 + amplifier); duration -= scaleDuration * 2, ++amplifier) {
-        }
-        return duration;
-    }
+   public int getEffectDuration(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Poison");
+      int baseDuration = abilityWeaponProperties.getBaseDurationEffect();
+      int scaleDuration = abilityWeaponProperties.getScaleDurationEffect();
+      int duration = abilityWeaponProperties.getTotalDuration(grade);
 
-    private final int getEffectAmplifier(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Poison");
-        int baseDuration;
-        int scaleDuration;
-        int duration;
-        int amplifier;
-        for (baseDuration = abilityWeaponProperties.getBaseDurationEffect(), scaleDuration = abilityWeaponProperties.getScaleDurationEffect(), duration = abilityWeaponProperties.getTotalDuration(grade), amplifier = 0; duration > baseDuration + scaleDuration * (5 + amplifier); duration -= scaleDuration * 2, ++amplifier) {
-        }
-        return amplifier;
-    }
+      for(int amplifier = 0; duration > baseDuration + scaleDuration * (5 + amplifier); ++amplifier) {
+         duration -= scaleDuration * 2;
+      }
 
-    @Override
-    public void cast(final Entity caster, final Entity target, final int grade, final double damage) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        if (target instanceof LivingEntity) {
-            final LivingEntity victims = (LivingEntity) target;
-            final Location location = victims.getEyeLocation();
-            final PotionEffectType potion = PotionUtil.getPoisonType(victims);
-            final int duration = this.getEffectDuration(grade);
-            final int amplifier = potion.equals(PotionEffectType.WITHER) ? (this.getEffectAmplifier(grade) + 1) : this.getEffectAmplifier(grade);
-            final Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
-            Bridge.getBridgeParticle().playParticle(players, ParticleEnum.SLIME, location, 20, 0.3, 0.3, 0.3, 0.30000001192092896);
-            Bridge.getBridgeSound().playSound(players, location, SoundEnum.ENCHANT_THORNS_HIT, 1.0f, 1.0f);
-            CombatUtil.applyPotion(victims, potion, duration, amplifier);
-        }
-    }
+      return duration;
+   }
 
-    private static class AbilityPoisonHelper {
-        private static final AbilityWeaponPoison instance;
+   private final int getEffectAmplifier(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Poison");
+      int baseDuration = abilityWeaponProperties.getBaseDurationEffect();
+      int scaleDuration = abilityWeaponProperties.getScaleDurationEffect();
+      int duration = abilityWeaponProperties.getTotalDuration(grade);
 
-        static {
-            final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-            instance = new AbilityWeaponPoison(plugin, "Poison");
-        }
-    }
+      int amplifier;
+      for(amplifier = 0; duration > baseDuration + scaleDuration * (5 + amplifier); ++amplifier) {
+         duration -= scaleDuration * 2;
+      }
+
+      return amplifier;
+   }
+
+   public void cast(Entity caster, Entity target, int grade, double damage) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      if (target instanceof LivingEntity) {
+         LivingEntity victims = (LivingEntity)target;
+         Location location = victims.getEyeLocation();
+         PotionEffectType potion = PotionUtil.getPoisonType(victims);
+         int duration = this.getEffectDuration(grade);
+         int amplifier = potion.equals(PotionEffectType.WITHER) ? this.getEffectAmplifier(grade) + 1 : this.getEffectAmplifier(grade);
+         Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
+         Bridge.getBridgeParticle().playParticle(players, ParticleEnum.SLIME, location, 20, 0.3D, 0.3D, 0.3D, 0.30000001192092896D);
+         Bridge.getBridgeSound().playSound(players, location, SoundEnum.ENCHANT_THORNS_HIT, 1.0F, 1.0F);
+         CombatUtil.applyPotion(victims, potion, duration, amplifier);
+      }
+
+   }
+
+   // $FF: synthetic method
+   AbilityWeaponPoison(MyItems var1, String var2, AbilityWeaponPoison var3) {
+      this(var1, var2);
+   }
+
+   private static class AbilityPoisonHelper {
+      private static final AbilityWeaponPoison instance;
+
+      static {
+         MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+         instance = new AbilityWeaponPoison(plugin, "Poison", (AbilityWeaponPoison)null);
+      }
+   }
 }

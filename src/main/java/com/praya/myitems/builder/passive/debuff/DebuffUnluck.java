@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.passive.debuff;
 
 import api.praya.myitems.builder.passive.PassiveEffectEnum;
@@ -15,28 +11,28 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class DebuffUnluck extends PassiveEffect {
-    private static final PassiveEffectEnum debuff;
+   private static final PassiveEffectEnum debuff;
 
-    static {
-        debuff = PassiveEffectEnum.UNLUCK;
-    }
+   static {
+      debuff = PassiveEffectEnum.UNLUCK;
+   }
 
-    public DebuffUnluck() {
-        super(DebuffUnluck.debuff, 1);
-    }
+   public DebuffUnluck() {
+      super(debuff, 1);
+   }
 
-    public DebuffUnluck(final int grade) {
-        super(DebuffUnluck.debuff, grade);
-    }
+   public DebuffUnluck(int grade) {
+      super(debuff, grade);
+   }
 
-    @Override
-    public final void cast(final Player player) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        if (ServerUtil.isCompatible(VersionNMS.V1_9_R2)) {
-            final PotionEffectType potionType = this.getPotion();
-            final boolean isEnableParticle = mainConfig.isMiscEnableParticlePotion();
-            final PotionEffect potion = PotionUtil.createPotion(potionType, 96000, this.grade, true, isEnableParticle);
-            player.addPotionEffect(potion);
-        }
-    }
+   public final void cast(Player player) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      if (ServerUtil.isCompatible(VersionNMS.V1_9_R1)) {
+         PotionEffectType potionType = this.getPotion();
+         boolean isEnableParticle = mainConfig.isMiscEnableParticlePotion();
+         PotionEffect potion = PotionUtil.createPotion(potionType, 96000, this.grade, true, isEnableParticle);
+         player.addPotionEffect(potion);
+      }
+
+   }
 }

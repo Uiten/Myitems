@@ -29,7 +29,7 @@
 Common:
   Prefix: "&f"
   Name: "Common"
-
+    
 Uncommon:
   Prefix: "&a"
   Name: "Uncommon"
@@ -47,8 +47,8 @@ Uncommon:
     Health: 1.1
     Block_Amount: 1.1
     Block_Rate: 1.1
-    Dodge_Rate: 1.1
-
+    Dodge_Rate: 1.1    
+    
 Magic:
   Prefix: "&9"
   Name: "Magic"
@@ -67,7 +67,7 @@ Magic:
     Block_Amount: 1.2
     Block_Rate: 1.2
     Dodge_Rate: 1.2
-
+    
 Epic:
   Prefix: "&5"
   Name: "Epic"
@@ -86,7 +86,7 @@ Epic:
     Block_Amount: 1.35
     Block_Rate: 1.35
     Dodge_Rate: 1.35
-
+    
 Legendary:
   Prefix: "&6"
   Name: "Legendary"

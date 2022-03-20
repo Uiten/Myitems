@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.ability.weapon;
 
 import api.praya.myitems.builder.ability.*;
@@ -21,202 +17,213 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class AbilityWeaponVenomBlast extends AbilityWeapon implements AbilityWeaponAttributeBaseDamage, AbilityWeaponAttributeCastDamage, AbilityWeaponAttributeEffect {
     private static final String ABILITY_ID = "Venom_Blast";
 
-    private AbilityWeaponVenomBlast(final MyItems plugin, final String id) {
+    private AbilityWeaponVenomBlast(MyItems plugin, String id) {
         super(plugin, id);
     }
 
     public static final AbilityWeaponVenomBlast getInstance() {
-        return AbilityVenomBlastHelper.instance;
+        return AbilityWeaponVenomBlast.AbilityVenomBlastHelper.instance;
     }
 
-    @Override
     public String getKeyLore() {
-        final MainConfig mainConfig = MainConfig.getInstance();
+        MainConfig mainConfig = MainConfig.getInstance();
         return mainConfig.getAbilityWeaponIdentifierVenomBlast();
     }
 
-    @Override
     public List<String> getDescription() {
         return null;
     }
 
-    @Override
     public int getMaxGrade() {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
+        MyItems plugin = (MyItems) JavaPlugin.getPlugin(MyItems.class);
+        GameManager gameManager = plugin.getGameManager();
+        AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+        AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
         return abilityWeaponProperties.getMaxGrade();
     }
 
-    @Override
-    public double getBaseBonusDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
-        final double baseBonusDamage = grade * abilityWeaponProperties.getScaleBaseBonusDamage();
+    public double getBaseBonusDamage(int grade) {
+        MyItems plugin = (MyItems) JavaPlugin.getPlugin(MyItems.class);
+        GameManager gameManager = plugin.getGameManager();
+        AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+        AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
+        double baseBonusDamage = (double) grade * abilityWeaponProperties.getScaleBaseBonusDamage();
         return baseBonusDamage;
     }
 
-    @Override
-    public double getBasePercentDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
-        final double basePercentDamage = grade * abilityWeaponProperties.getScaleBasePercentDamage();
+    public double getBasePercentDamage(int grade) {
+        MyItems plugin = (MyItems) JavaPlugin.getPlugin(MyItems.class);
+        GameManager gameManager = plugin.getGameManager();
+        AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+        AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
+        double basePercentDamage = (double) grade * abilityWeaponProperties.getScaleBasePercentDamage();
         return basePercentDamage;
     }
 
-    @Override
-    public double getCastBonusDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
-        final double castBonusDamage = grade * abilityWeaponProperties.getScaleCastBonusDamage();
+    public double getCastBonusDamage(int grade) {
+        MyItems plugin = (MyItems) JavaPlugin.getPlugin(MyItems.class);
+        GameManager gameManager = plugin.getGameManager();
+        AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+        AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
+        double castBonusDamage = (double) grade * abilityWeaponProperties.getScaleCastBonusDamage();
         return castBonusDamage;
     }
 
-    @Override
-    public double getCastPercentDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
-        final double castPercentDamage = grade * abilityWeaponProperties.getScaleCastPercentDamage();
+    public double getCastPercentDamage(int grade) {
+        MyItems plugin = (MyItems) JavaPlugin.getPlugin(MyItems.class);
+        GameManager gameManager = plugin.getGameManager();
+        AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+        AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
+        double castPercentDamage = (double) grade * abilityWeaponProperties.getScaleCastPercentDamage();
         return castPercentDamage;
     }
 
-    @Override
-    public int getEffectDuration(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
+    public int getEffectDuration(int grade) {
+        MyItems plugin = (MyItems) JavaPlugin.getPlugin(MyItems.class);
+        GameManager gameManager = plugin.getGameManager();
+        AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+        AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Venom_Blast");
         return abilityWeaponProperties.getTotalDuration(grade);
     }
 
-    @Override
-    public void cast(final Entity caster, final Entity target, final int grade, final double damage) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final MainConfig mainConfig = MainConfig.getInstance();
-        LivingEntity attacker;
+    public void cast(Entity caster, Entity target, int grade, double damage) {
+        final MyItems plugin = (MyItems) JavaPlugin.getPlugin(MyItems.class);
+        MainConfig mainConfig = MainConfig.getInstance();
+        final LivingEntity attacker;
         if (caster instanceof Projectile) {
-            final Projectile projectile = (Projectile) caster;
-            final ProjectileSource projectileSource = projectile.getShooter();
+            Projectile projectile = (Projectile) caster;
+            ProjectileSource projectileSource = projectile.getShooter();
             if (projectileSource == null || !(projectileSource instanceof LivingEntity)) {
                 return;
             }
+
             attacker = (LivingEntity) projectileSource;
         } else {
             attacker = (LivingEntity) caster;
         }
+
         if (target instanceof LivingEntity) {
             final LivingEntity victims = (LivingEntity) target;
-            final Location location = victims.getLocation().add(0.0, 0.5, 0.0);
-            final PotionEffectType potionType = PotionUtil.getPoisonType(victims);
-            final double spreadDamage = this.getCastBonusDamage(grade) + damage * (this.getCastPercentDamage(grade) / 100.0);
-            final double blastDamage = spreadDamage * 2.0;
-            final double decrease = 1.0;
-            final int limit = 4;
+            final Location location = victims.getLocation().add(0.0D, 0.5D, 0.0D);
+            PotionEffectType potionType = PotionUtil.getPoisonType(victims);
+            final double spreadDamage = this.getCastBonusDamage(grade) + damage * (this.getCastPercentDamage(grade) / 100.0D);
+            final double blastDamage = spreadDamage * 2.0D;
+            double decrease = 1.0D;
+            int limit;
             final int duration = this.getEffectDuration(grade);
-            final int amplifier = potionType.equals(PotionEffectType.WITHER) ? 2 : 1;
-            final PotionEffect potion = PotionUtil.createPotion(potionType, duration, amplifier);
-            final Set<LivingEntity> units = new HashSet<LivingEntity>();
+            int amplifier = potionType.equals(PotionEffectType.WITHER) ? 2 : 1;
+            PotionEffect potion = PotionUtil.createPotion(potionType, duration, amplifier);
+            final Set<LivingEntity> units = new HashSet();
             final Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
             victims.addPotionEffect(potion);
-            new BukkitRunnable() {
+            (new BukkitRunnable() {
                 int time = 0;
-                double radius = 3.0;
+                double radius = 3.0D;
                 double x;
                 double z;
 
                 public void run() {
                     if (this.time > 4) {
                         this.cancel();
-                        return;
-                    }
-                    if (this.time == 4) {
-                        Bridge.getBridgeParticle().playParticle(players, ParticleEnum.EXPLOSION_HUGE, location, 10, 0.0, 0.2, 0.0, 0.05000000074505806);
-                        Bridge.getBridgeSound().playSound(players, location, SoundEnum.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
-                        for (final LivingEntity unit : CombatUtil.getNearbyUnits(location, 3.0)) {
-                            if (!unit.equals(attacker) && !unit.equals(victims) && !units.contains(unit)) {
-                                CombatUtil.areaDamage(attacker, unit, blastDamage);
-                                units.add(unit);
-                            }
-                        }
                     } else {
-                        final Material materialDandelion = MaterialEnum.DANDELION.getMaterial();
-                        Bridge.getBridgeSound().playSound(players, location, SoundEnum.BLOCK_GRAVEL_BREAK, 1.0f, 1.0f);
-                        for (final LivingEntity unit2 : CombatUtil.getNearbyUnits(location, this.radius + 1.0)) {
-                            if (!unit2.equals(attacker) && !unit2.equals(victims) && !units.contains(unit2)) {
-                                final PotionEffectType potionType = PotionUtil.getPoisonType(unit2);
-                                final int amplifier = potionType.equals(PotionEffectType.WITHER) ? 2 : 1;
-                                final PotionEffect potion = PotionUtil.createPotion(potionType, duration, amplifier);
-                                unit2.addPotionEffect(potion);
-                                CombatUtil.areaDamage(attacker, unit2, spreadDamage);
-                                units.add(unit2);
-                            }
-                        }
-                        for (int i = 0; i < 360; i += 30) {
-                            this.x = Math.sin(i) * this.radius;
-                            this.z = Math.cos(i) * this.radius;
-                            location.add(this.x, 0.0, this.z);
-                            Bridge.getBridgeParticle().playParticle(players, ParticleEnum.VILLAGER_HAPPY, location, 3, 0.05, 0.05, 0.05, 0.05000000074505806);
-                            final Block block = location.getBlock();
-                            final Material material = block.getType();
-                            if (material.equals(Material.AIR)) {
-                                final Location locationBlock = block.getLocation();
-                                BlockUtil.set(locationBlock);
-                                block.setType(materialDandelion);
-                                block.setMetadata("Anti_Block_Physic", MetadataUtil.createMetadata(true));
-                                new BukkitRunnable() {
-                                    final Location locationFlower = location.clone();
+                        if (this.time == 4) {
+                            Bridge.getBridgeParticle().playParticle(players, ParticleEnum.EXPLOSION_HUGE, location, 10, 0.0D, 0.2D, 0.0D, 0.05000000074505806D);
+                            Bridge.getBridgeSound().playSound(players, location, SoundEnum.ENTITY_GENERIC_EXPLODE, 1.0F, 1.0F);
+                            Iterator var2 = CombatUtil.getNearbyUnits(location, 3.0D).iterator();
 
-                                    public void run() {
-                                        final Block blockFlower = this.locationFlower.getBlock();
-                                        final Material materialFlower = blockFlower.getType();
-                                        final Location locationBlockFlower = blockFlower.getLocation();
-                                        BlockUtil.remove(locationBlockFlower);
-                                        if (materialFlower.equals(materialDandelion)) {
-                                            blockFlower.setType(Material.AIR);
-                                        }
-                                    }
-                                }.runTaskLater(plugin, 5L);
+                            while (var2.hasNext()) {
+                                LivingEntity unit = (LivingEntity) var2.next();
+                                if (!unit.equals(attacker) && !unit.equals(victims) && !units.contains(unit)) {
+                                    CombatUtil.areaDamage(attacker, unit, blastDamage);
+                                    units.add(unit);
+                                }
                             }
-                            location.subtract(this.x, 0.0, this.z);
+                        } else {
+                            final Material materialDandelion = MaterialEnum.DANDELION.getMaterial();
+                            Bridge.getBridgeSound().playSound(players, location, SoundEnum.BLOCK_GRAVEL_BREAK, 1.0F, 1.0F);
+                            Iterator var3 = CombatUtil.getNearbyUnits(location, this.radius + 1.0D).iterator();
+
+                            while (var3.hasNext()) {
+                                LivingEntity unitx = (LivingEntity) var3.next();
+                                if (!unitx.equals(attacker) && !unitx.equals(victims) && !units.contains(unitx)) {
+                                    PotionEffectType potionType = PotionUtil.getPoisonType(unitx);
+                                    int amplifier = potionType.equals(PotionEffectType.WITHER) ? 2 : 1;
+                                    PotionEffect potion = PotionUtil.createPotion(potionType, duration, amplifier);
+                                    unitx.addPotionEffect(potion);
+                                    CombatUtil.areaDamage(attacker, unitx, spreadDamage);
+                                    units.add(unitx);
+                                }
+                            }
+
+                            for (int i = 0; i < 360; i += 30) {
+                                this.x = Math.sin((double) i) * this.radius;
+                                this.z = Math.cos((double) i) * this.radius;
+                                location.add(this.x, 0.0D, this.z);
+                                Bridge.getBridgeParticle().playParticle(players, ParticleEnum.VILLAGER_HAPPY, location, 3, 0.05D, 0.05D, 0.05D, 0.05000000074505806D);
+                                Block block = location.getBlock();
+                                Material material = block.getType();
+                                if (material.equals(Material.AIR)) {
+                                    Location locationBlock = block.getLocation();
+                                    BlockUtil.set(locationBlock);
+                                    block.setType(materialDandelion);
+                                    block.setMetadata("Anti_Block_Physic", MetadataUtil.createMetadata(true));
+                                    (new BukkitRunnable() {
+                                        final Location locationFlower;
+
+                                        {
+                                            Location var2 = null;
+                                            this.locationFlower = (Location) var2.clone();
+                                        }
+
+                                        public void run() {
+                                            Block blockFlower = this.locationFlower.getBlock();
+                                            Material materialFlower = blockFlower.getType();
+                                            Location locationBlockFlower = blockFlower.getLocation();
+                                            BlockUtil.remove(locationBlockFlower);
+                                            if (materialFlower.equals(materialDandelion)) {
+                                                blockFlower.setType(Material.AIR);
+                                            }
+
+                                        }
+                                    }).runTaskLater(plugin, 5L);
+                                }
+
+                                location.subtract(this.x, 0.0D, this.z);
+                            }
+
+                            --this.radius;
                         }
-                        --this.radius;
+
+                        ++this.time;
                     }
-                    ++this.time;
                 }
-            }.runTaskTimer(plugin, 0L, 5L);
+            }).runTaskTimer(plugin, 0L, 5L);
         }
+
+    }
+
+    // $FF: synthetic method
+    AbilityWeaponVenomBlast(MyItems var1, String var2, AbilityWeaponVenomBlast var3) {
+        this(var1, var2);
     }
 
     private static class AbilityVenomBlastHelper {
         private static final AbilityWeaponVenomBlast instance;
 
         static {
-            final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-            instance = new AbilityWeaponVenomBlast(plugin, "Venom_Blast");
+            MyItems plugin = (MyItems) JavaPlugin.getPlugin(MyItems.class);
+            instance = new AbilityWeaponVenomBlast(plugin, "Venom_Blast", (AbilityWeaponVenomBlast) null);
         }
     }
 }

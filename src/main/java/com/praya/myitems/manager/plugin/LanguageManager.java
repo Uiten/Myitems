@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.manager.plugin;
 
 import com.praya.myitems.MyItems;
@@ -11,129 +7,134 @@ import com.praya.myitems.config.plugin.MainConfig;
 import core.praya.agarthalib.bridge.unity.Bridge;
 import core.praya.agarthalib.builder.main.LanguageBuild;
 import core.praya.agarthalib.builder.message.MessageBuild;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 public class LanguageManager extends HandlerManager {
-    private final LanguageConfig langConfig;
+   private final LanguageConfig langConfig;
 
-    protected LanguageManager(final MyItems plugin) {
-        super(plugin);
-        this.langConfig = new LanguageConfig(plugin);
-    }
+   protected LanguageManager(MyItems plugin) {
+      super(plugin);
+      this.langConfig = new LanguageConfig(plugin);
+   }
 
-    public final LanguageConfig getLangConfig() {
-        return this.langConfig;
-    }
+   public final LanguageConfig getLangConfig() {
+      return this.langConfig;
+   }
 
-    public final Collection<String> getLanguageIDs() {
-        return this.getLangConfig().getLanguageIDs();
-    }
+   public final Collection<String> getLanguageIDs() {
+      return this.getLangConfig().getLanguageIDs();
+   }
 
-    public final Collection<LanguageBuild> getLanguageBuilds() {
-        return this.getLangConfig().getLanguageBuilds();
-    }
+   public final Collection<LanguageBuild> getLanguageBuilds() {
+      return this.getLangConfig().getLanguageBuilds();
+   }
 
-    public final LanguageBuild getLanguageBuild(final String id) {
-        return this.getLangConfig().getLanguageBuild(id);
-    }
+   public final LanguageBuild getLanguageBuild(String id) {
+      return this.getLangConfig().getLanguageBuild(id);
+   }
 
-    public final LanguageBuild getLanguage(final String id) {
-        return this.getLangConfig().getLanguage(id);
-    }
+   public final LanguageBuild getLanguage(String id) {
+      return this.getLangConfig().getLanguage(id);
+   }
 
-    public final boolean isLanguageExists(final String id) {
-        return this.getLanguageBuild(id) != null;
-    }
+   public final boolean isLanguageExists(String id) {
+      return this.getLanguageBuild(id) != null;
+   }
 
-    public final List<String> getListText(final LivingEntity entity, final String key) {
-        if (entity != null && entity instanceof Player) {
-            final Player player = (Player) entity;
-            final String locale = Bridge.getBridgePlayer().getLocale(player);
-            return this.getListText(locale, key);
-        }
-        return this.getListText(key);
-    }
+   public final List<String> getListText(LivingEntity entity, String key) {
+      if (entity != null && entity instanceof Player) {
+         Player player = (Player)entity;
+         String locale = Bridge.getBridgePlayer().getLocale(player);
+         return this.getListText(locale, key);
+      } else {
+         return this.getListText(key);
+      }
+   }
 
-    public final List<String> getListText(final CommandSender sender, final String key) {
-        if (sender != null && sender instanceof Player) {
-            final Player player = (Player) sender;
-            final String locale = Bridge.getBridgePlayer().getLocale(player);
-            return this.getListText(locale, key);
-        }
-        return this.getListText(key);
-    }
+   public final List<String> getListText(CommandSender sender, String key) {
+      if (sender != null && sender instanceof Player) {
+         Player player = (Player)sender;
+         String locale = Bridge.getBridgePlayer().getLocale(player);
+         return this.getListText(locale, key);
+      } else {
+         return this.getListText(key);
+      }
+   }
 
-    public final List<String> getListText(final String key) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final String locale = mainConfig.getGeneralLocale();
-        return this.getListText(locale, key);
-    }
+   public final List<String> getListText(String key) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      String locale = mainConfig.getGeneralLocale();
+      return this.getListText(locale, key);
+   }
 
-    public final List<String> getListText(final String id, final String key) {
-        final MessageBuild message = this.getMessage(id, key);
-        return (message != null) ? message.getListText() : new ArrayList<String>();
-    }
+   public final List<String> getListText(String id, String key) {
+      MessageBuild message = this.getMessage(id, key);
+      return (List)(message != null ? message.getListText() : new ArrayList());
+   }
 
-    public final String getText(final LivingEntity entity, final String key) {
-        if (entity != null && entity instanceof Player) {
-            final Player player = (Player) entity;
-            final String locale = Bridge.getBridgePlayer().getLocale(player);
-            return this.getText(locale, key);
-        }
-        return this.getText(key);
-    }
+   public final String getText(LivingEntity entity, String key) {
+      if (entity != null && entity instanceof Player) {
+         Player player = (Player)entity;
+         String locale = Bridge.getBridgePlayer().getLocale(player);
+         return this.getText(locale, key);
+      } else {
+         return this.getText(key);
+      }
+   }
 
-    public final String getText(final CommandSender sender, final String key) {
-        if (sender != null && sender instanceof Player) {
-            final Player player = (Player) sender;
-            final String locale = Bridge.getBridgePlayer().getLocale(player);
-            return this.getText(locale, key);
-        }
-        return this.getText(key);
-    }
+   public final String getText(CommandSender sender, String key) {
+      if (sender != null && sender instanceof Player) {
+         Player player = (Player)sender;
+         String locale = Bridge.getBridgePlayer().getLocale(player);
+         return this.getText(locale, key);
+      } else {
+         return this.getText(key);
+      }
+   }
 
-    public final String getText(final String key) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final String locale = mainConfig.getGeneralLocale();
-        return this.getText(locale, key);
-    }
+   public final String getText(String key) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      String locale = mainConfig.getGeneralLocale();
+      return this.getText(locale, key);
+   }
 
-    public final String getText(final String id, final String key) {
-        final MessageBuild message = this.getMessage(id, key);
-        return (message != null) ? message.getText() : "";
-    }
+   public final String getText(String id, String key) {
+      MessageBuild message = this.getMessage(id, key);
+      return message != null ? message.getText() : "";
+   }
 
-    public final MessageBuild getMessage(final LivingEntity entity, final String key) {
-        if (entity != null && entity instanceof Player) {
-            final Player player = (Player) entity;
-            final String locale = Bridge.getBridgePlayer().getLocale(player);
-            return this.getMessage(locale, key);
-        }
-        return this.getMessage(key);
-    }
+   public final MessageBuild getMessage(LivingEntity entity, String key) {
+      if (entity != null && entity instanceof Player) {
+         Player player = (Player)entity;
+         String locale = Bridge.getBridgePlayer().getLocale(player);
+         return this.getMessage(locale, key);
+      } else {
+         return this.getMessage(key);
+      }
+   }
 
-    public final MessageBuild getMessage(final CommandSender sender, final String key) {
-        if (sender != null && sender instanceof Player) {
-            final Player player = (Player) sender;
-            final String locale = Bridge.getBridgePlayer().getLocale(player);
-            return this.getMessage(locale, key);
-        }
-        return this.getMessage(key);
-    }
+   public final MessageBuild getMessage(CommandSender sender, String key) {
+      if (sender != null && sender instanceof Player) {
+         Player player = (Player)sender;
+         String locale = Bridge.getBridgePlayer().getLocale(player);
+         return this.getMessage(locale, key);
+      } else {
+         return this.getMessage(key);
+      }
+   }
 
-    public final MessageBuild getMessage(final String key) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final String locale = mainConfig.getGeneralLocale();
-        return this.getMessage(locale, key);
-    }
+   public final MessageBuild getMessage(String key) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      String locale = mainConfig.getGeneralLocale();
+      return this.getMessage(locale, key);
+   }
 
-    public final MessageBuild getMessage(final String id, final String key) {
-        return this.getLangConfig().getMessage(id, key);
-    }
+   public final MessageBuild getMessage(String id, String key) {
+      return this.getLangConfig().getMessage(id, key);
+   }
 }

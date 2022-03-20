@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package api.praya.myitems.manager.player;
 
 import api.praya.myitems.builder.item.ItemStatsArmor;
@@ -13,21 +9,21 @@ import com.praya.myitems.manager.player.PlayerManager;
 import org.bukkit.entity.Player;
 
 public class PlayerItemStatsManagerAPI extends HandlerManager {
-    protected PlayerItemStatsManagerAPI(final MyItems plugin) {
-        super(plugin);
-    }
+   protected PlayerItemStatsManagerAPI(MyItems plugin) {
+      super(plugin);
+   }
 
-    public final ItemStatsWeapon getItemStatsWeapon(final Player player) {
-        return this.getPlayerItemStatsManager().getItemStatsWeapon(player);
-    }
+   public final ItemStatsWeapon getItemStatsWeapon(Player player) {
+      return this.getPlayerItemStatsManager().getItemStatsWeapon(player);
+   }
 
-    public final ItemStatsArmor getItemStatsArmor(final Player player) {
-        return this.getPlayerItemStatsManager().getItemStatsArmor(player);
-    }
+   public final ItemStatsArmor getItemStatsArmor(Player player) {
+      return this.getPlayerItemStatsManager().getItemStatsArmor(player);
+   }
 
-    private final PlayerItemStatsManager getPlayerItemStatsManager() {
-        final PlayerManager playerManager = this.plugin.getPlayerManager();
-        final PlayerItemStatsManager playerItemStatsManager = playerManager.getPlayerItemStatsManager();
-        return playerItemStatsManager;
-    }
+   private final PlayerItemStatsManager getPlayerItemStatsManager() {
+      PlayerManager playerManager = this.plugin.getPlayerManager();
+      PlayerItemStatsManager playerItemStatsManager = playerManager.getPlayerItemStatsManager();
+      return playerItemStatsManager;
+   }
 }

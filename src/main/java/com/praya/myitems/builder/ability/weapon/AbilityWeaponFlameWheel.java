@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.ability.weapon;
 
 import api.praya.myitems.builder.ability.AbilityWeapon;
@@ -16,128 +12,126 @@ import com.praya.myitems.manager.game.GameManager;
 import core.praya.agarthalib.bridge.unity.Bridge;
 import core.praya.agarthalib.enums.branch.ParticleEnum;
 import core.praya.agarthalib.enums.branch.SoundEnum;
+import java.util.Collection;
+import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Collection;
-import java.util.List;
-
 public class AbilityWeaponFlameWheel extends AbilityWeapon implements AbilityWeaponAttributeBaseDamage, AbilityWeaponAttributeEffect {
-    private static final String ABILITY_ID = "Flame_Wheel";
+   private static final String ABILITY_ID = "Flame_Wheel";
 
-    private AbilityWeaponFlameWheel(final MyItems plugin, final String id) {
-        super(plugin, id);
-    }
+   private AbilityWeaponFlameWheel(MyItems plugin, String id) {
+      super(plugin, id);
+   }
 
-    public static final AbilityWeaponFlameWheel getInstance() {
-        return AbilityFlameWheelHelper.instance;
-    }
+   public static final AbilityWeaponFlameWheel getInstance() {
+      return AbilityWeaponFlameWheel.AbilityFlameWheelHelper.instance;
+   }
 
-    @Override
-    public String getKeyLore() {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        return mainConfig.getAbilityWeaponIdentifierFlameWheel();
-    }
+   public String getKeyLore() {
+      MainConfig mainConfig = MainConfig.getInstance();
+      return mainConfig.getAbilityWeaponIdentifierFlameWheel();
+   }
 
-    @Override
-    public List<String> getDescription() {
-        return null;
-    }
+   public List<String> getDescription() {
+      return null;
+   }
 
-    @Override
-    public int getMaxGrade() {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame_Wheel");
-        return abilityWeaponProperties.getMaxGrade();
-    }
+   public int getMaxGrade() {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame_Wheel");
+      return abilityWeaponProperties.getMaxGrade();
+   }
 
-    @Override
-    public double getBaseBonusDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame_Wheel");
-        final double baseBonusDamage = grade * abilityWeaponProperties.getScaleBaseBonusDamage();
-        return baseBonusDamage;
-    }
+   public double getBaseBonusDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame_Wheel");
+      double baseBonusDamage = (double)grade * abilityWeaponProperties.getScaleBaseBonusDamage();
+      return baseBonusDamage;
+   }
 
-    @Override
-    public double getBasePercentDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame_Wheel");
-        final double basePercentDamage = grade * abilityWeaponProperties.getScaleBasePercentDamage();
-        return basePercentDamage;
-    }
+   public double getBasePercentDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame_Wheel");
+      double basePercentDamage = (double)grade * abilityWeaponProperties.getScaleBasePercentDamage();
+      return basePercentDamage;
+   }
 
-    @Override
-    public int getEffectDuration(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame_Wheel");
-        return abilityWeaponProperties.getTotalDuration(grade);
-    }
+   public int getEffectDuration(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame_Wheel");
+      return abilityWeaponProperties.getTotalDuration(grade);
+   }
 
-    @Override
-    public void cast(final Entity caster, final Entity target, final int grade, final double damage) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final MainConfig mainConfig = MainConfig.getInstance();
-        if (target instanceof LivingEntity) {
-            final LivingEntity victims = (LivingEntity) target;
-            final Location location = victims.getLocation();
-            final int duration = this.getEffectDuration(grade);
-            final int limit = 12;
-            final Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
-            victims.setFireTicks(duration);
-            Bridge.getBridgeParticle().playParticle(players, ParticleEnum.LAVA, location, 5, 0.2, 0.05, 0.2, 0.10000000149011612);
-            Bridge.getBridgeSound().playSound(players, location, SoundEnum.ITEM_FIRECHARGE_USE, 1.0f, 1.0f);
-            new BukkitRunnable() {
-                double horizontal = 0.0;
-                double vertical = 0.25;
-                int time = 0;
-                double x;
-                double y;
-                double z;
+   public void cast(Entity caster, Entity target, int grade, double damage) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      MainConfig mainConfig = MainConfig.getInstance();
+      if (target instanceof LivingEntity) {
+         LivingEntity victims = (LivingEntity)target;
+         final Location location = victims.getLocation();
+         int duration = this.getEffectDuration(grade);
+         int limit;
+         final Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
+         victims.setFireTicks(duration);
+         Bridge.getBridgeParticle().playParticle(players, ParticleEnum.LAVA, location, 5, 0.2D, 0.05D, 0.2D, 0.10000000149011612D);
+         Bridge.getBridgeSound().playSound(players, location, SoundEnum.ITEM_FIRECHARGE_USE, 1.0F, 1.0F);
+         (new BukkitRunnable() {
+            double horizontal = 0.0D;
+            double vertical = 0.25D;
+            int time = 0;
+            double x;
+            double y;
+            double z;
 
-                public void run() {
-                    if (this.time >= 12) {
-                        this.cancel();
-                        return;
-                    }
-                    for (int i = 0; i < 3; ++i) {
-                        this.x = 0.8 * Math.sin(this.horizontal);
-                        this.y = this.vertical;
-                        this.z = 0.8 * Math.cos(this.horizontal);
-                        location.add(this.x, this.y, this.z);
-                        Bridge.getBridgeParticle().playParticle(players, ParticleEnum.FLAME, location, 1, 0.0, 0.0, 0.0, 0.0);
-                        location.subtract(this.x, this.y, this.z);
-                        location.add(-this.x, this.y, -this.z);
-                        Bridge.getBridgeParticle().playParticle(players, ParticleEnum.FLAME, location, 1, 0.0, 0.0, 0.0, 0.0);
-                        location.subtract(-this.x, this.y, -this.z);
-                        this.horizontal += 0.1308996938995747;
-                        this.vertical += 0.05;
-                    }
-                    ++this.time;
-                }
-            }.runTaskTimer(plugin, 0L, 1L);
-        }
-    }
+            public void run() {
+               if (this.time >= 12) {
+                  this.cancel();
+               } else {
+                  for(int i = 0; i < 3; ++i) {
+                     this.x = 0.8D * Math.sin(this.horizontal);
+                     this.y = this.vertical;
+                     this.z = 0.8D * Math.cos(this.horizontal);
+                     location.add(this.x, this.y, this.z);
+                     Bridge.getBridgeParticle().playParticle(players, ParticleEnum.FLAME, location, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                     location.subtract(this.x, this.y, this.z);
+                     location.add(-this.x, this.y, -this.z);
+                     Bridge.getBridgeParticle().playParticle(players, ParticleEnum.FLAME, location, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                     location.subtract(-this.x, this.y, -this.z);
+                     this.horizontal += 0.1308996938995747D;
+                     this.vertical += 0.05D;
+                  }
 
-    private static class AbilityFlameWheelHelper {
-        private static final AbilityWeaponFlameWheel instance;
+                  ++this.time;
+               }
+            }
+         }).runTaskTimer(plugin, 0L, 1L);
+      }
 
-        static {
-            final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-            instance = new AbilityWeaponFlameWheel(plugin, "Flame_Wheel");
-        }
-    }
+   }
+
+   // $FF: synthetic method
+   AbilityWeaponFlameWheel(MyItems var1, String var2, AbilityWeaponFlameWheel var3) {
+      this(var1, var2);
+   }
+
+   private static class AbilityFlameWheelHelper {
+      private static final AbilityWeaponFlameWheel instance;
+
+      static {
+         MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+         instance = new AbilityWeaponFlameWheel(plugin, "Flame_Wheel", (AbilityWeaponFlameWheel)null);
+      }
+   }
 }

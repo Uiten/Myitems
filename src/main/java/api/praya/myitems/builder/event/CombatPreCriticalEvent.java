@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package api.praya.myitems.builder.event;
 
 import com.praya.agarthalib.utility.MathUtil;
@@ -11,57 +7,51 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class CombatPreCriticalEvent extends Event implements Cancellable {
-    private static final HandlerList handlers;
+   private static final HandlerList handlers = new HandlerList();
+   private final LivingEntity attacker;
+   private final LivingEntity victims;
+   private boolean cancel = false;
+   private double chance;
 
-    static {
-        handlers = new HandlerList();
-    }
+   public CombatPreCriticalEvent(LivingEntity attacker, LivingEntity victims, double chance) {
+      this.attacker = attacker;
+      this.victims = victims;
+      this.chance = MathUtil.limitDouble(chance, 0.0D, 100.0D);
+   }
 
-    private final LivingEntity attacker;
-    private final LivingEntity victims;
-    private boolean cancel;
-    private double chance;
+   public final LivingEntity getAttacker() {
+      return this.attacker;
+   }
 
-    public CombatPreCriticalEvent(final LivingEntity attacker, final LivingEntity victims, final double chance) {
-        this.cancel = false;
-        this.attacker = attacker;
-        this.victims = victims;
-        this.chance = MathUtil.limitDouble(chance, 0.0, 100.0);
-    }
+   public final LivingEntity getVictims() {
+      return this.victims;
+   }
 
-    public static final HandlerList getHandlerList() {
-        return CombatPreCriticalEvent.handlers;
-    }
+   public final double getChance() {
+      return this.chance;
+   }
 
-    public final LivingEntity getAttacker() {
-        return this.attacker;
-    }
+   public final boolean isCritical() {
+      return MathUtil.chanceOf(this.chance);
+   }
 
-    public final LivingEntity getVictims() {
-        return this.victims;
-    }
+   public final void setChance(double chance) {
+      this.chance = MathUtil.limitDouble(chance, 0.0D, 100.0D);
+   }
 
-    public final double getChance() {
-        return this.chance;
-    }
+   public HandlerList getHandlers() {
+      return handlers;
+   }
 
-    public final void setChance(final double chance) {
-        this.chance = MathUtil.limitDouble(chance, 0.0, 100.0);
-    }
+   public static final HandlerList getHandlerList() {
+      return handlers;
+   }
 
-    public final boolean isCritical() {
-        return MathUtil.chanceOf(this.chance);
-    }
+   public boolean isCancelled() {
+      return this.cancel;
+   }
 
-    public HandlerList getHandlers() {
-        return CombatPreCriticalEvent.handlers;
-    }
-
-    public boolean isCancelled() {
-        return this.cancel;
-    }
-
-    public void setCancelled(final boolean cancel) {
-        this.cancel = cancel;
-    }
+   public void setCancelled(boolean cancel) {
+      this.cancel = cancel;
+   }
 }

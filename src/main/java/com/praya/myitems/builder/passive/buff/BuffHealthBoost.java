@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.passive.buff;
 
 import api.praya.myitems.builder.passive.PassiveEffectEnum;
@@ -10,48 +6,47 @@ import com.praya.myitems.MyItems;
 import com.praya.myitems.builder.abs.PassiveEffect;
 import com.praya.myitems.config.plugin.MainConfig;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class BuffHealthBoost extends PassiveEffect {
-    private static final PassiveEffectEnum buff;
+   private static final PassiveEffectEnum buff;
 
-    static {
-        buff = PassiveEffectEnum.HEALTH_BOOST;
-    }
+   static {
+      buff = PassiveEffectEnum.HEALTH_BOOST;
+   }
 
-    public BuffHealthBoost() {
-        super(BuffHealthBoost.buff, 1);
-    }
+   public BuffHealthBoost() {
+      super(buff, 1);
+   }
 
-    public BuffHealthBoost(final int grade) {
-        super(BuffHealthBoost.buff, grade);
-    }
+   public BuffHealthBoost(int grade) {
+      super(buff, grade);
+   }
 
-    @Override
-    public final void cast(final Player player) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final PotionEffectType potionType = this.getPotion();
-        final boolean isEnableParticle = mainConfig.isMiscEnableParticlePotion();
-        final PotionEffect potion = PotionUtil.createPotion(potionType, 96000, this.grade, true, isEnableParticle);
-        player.addPotionEffect(potion);
-    }
+   public final void cast(Player player) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      PotionEffectType potionType = this.getPotion();
+      boolean isEnableParticle = mainConfig.isMiscEnableParticlePotion();
+      PotionEffect potion = PotionUtil.createPotion(potionType, 96000, this.grade, true, isEnableParticle);
+      player.addPotionEffect(potion);
+   }
 
-    public final void reset(final Player player) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final PotionEffectType potion = this.getPotion();
-        final double health = player.getHealth();
-        player.removePotionEffect(potion);
-        new BukkitRunnable() {
-            public void run() {
-                if (player.isOnline()) {
-                    final double maxHealth = player.getMaxHealth();
-                    player.setHealth((health > maxHealth) ? maxHealth : health);
-                }
+   public final void reset(final Player player) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      PotionEffectType potion = this.getPotion();
+      final double health = player.getHealth();
+      player.removePotionEffect(potion);
+      (new BukkitRunnable() {
+         public void run() {
+            if (player.isOnline()) {
+               double maxHealth = player.getMaxHealth();
+               player.setHealth(health > maxHealth ? maxHealth : health);
             }
-        }.runTaskLater(plugin, 1L);
-    }
+
+         }
+      }).runTaskLater(plugin, 1L);
+   }
 }

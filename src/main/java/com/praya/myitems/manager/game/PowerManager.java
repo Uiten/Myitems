@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.manager.game;
 
 import api.praya.myitems.builder.power.PowerClickEnum;
@@ -14,112 +10,117 @@ import com.praya.myitems.config.plugin.MainConfig;
 import org.bukkit.inventory.ItemStack;
 
 public class PowerManager extends HandlerManager {
-    private final PowerCommandManager powerCommandManager;
-    private final PowerShootManager powerShootManager;
-    private final PowerSpecialManager powerSpecialManager;
+   private final PowerCommandManager powerCommandManager;
+   private final PowerShootManager powerShootManager;
+   private final PowerSpecialManager powerSpecialManager;
 
-    protected PowerManager(final MyItems plugin) {
-        super(plugin);
-        this.powerCommandManager = new PowerCommandManager(plugin);
-        this.powerShootManager = new PowerShootManager(plugin);
-        this.powerSpecialManager = new PowerSpecialManager(plugin);
-    }
+   protected PowerManager(MyItems plugin) {
+      super(plugin);
+      this.powerCommandManager = new PowerCommandManager(plugin);
+      this.powerShootManager = new PowerShootManager(plugin);
+      this.powerSpecialManager = new PowerSpecialManager(plugin);
+   }
 
-    public final PowerCommandManager getPowerCommandManager() {
-        return this.powerCommandManager;
-    }
+   public final PowerCommandManager getPowerCommandManager() {
+      return this.powerCommandManager;
+   }
 
-    public final PowerShootManager getPowerShootManager() {
-        return this.powerShootManager;
-    }
+   public final PowerShootManager getPowerShootManager() {
+      return this.powerShootManager;
+   }
 
-    public final PowerSpecialManager getPowerSpecialManager() {
-        return this.powerSpecialManager;
-    }
+   public final PowerSpecialManager getPowerSpecialManager() {
+      return this.powerSpecialManager;
+   }
 
-    public final int getLineClick(final ItemStack item, final PowerClickEnum click) {
-        return EquipmentUtil.hasLore(item) ? EquipmentUtil.loreGetLineKey(item, this.getKeyClick(click)) : -1;
-    }
+   public final int getLineClick(ItemStack item, PowerClickEnum click) {
+      return EquipmentUtil.hasLore(item) ? EquipmentUtil.loreGetLineKey(item, this.getKeyClick(click)) : -1;
+   }
 
-    public final PowerClickEnum getClick(final String lore) {
-        PowerClickEnum[] values;
-        for (int length = (values = PowerClickEnum.values()).length, i = 0; i < length; ++i) {
-            final PowerClickEnum click = values[i];
-            if (lore.contains(this.getKeyClick(click, true))) {
-                return click;
-            }
-        }
-        return null;
-    }
+   public final PowerClickEnum getClick(String lore) {
+      PowerClickEnum[] var5;
+      int var4 = (var5 = PowerClickEnum.values()).length;
 
-    public final double getCooldown(final String lore) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final String[] loreCheck = lore.split(MainConfig.KEY_COOLDOWN);
-        if (loreCheck.length > 1) {
-            final String colorPowerCooldown = mainConfig.getPowerColorCooldown();
-            final String loreStep = loreCheck[1].replaceFirst(colorPowerCooldown, "");
-            if (MathUtil.isNumber(loreStep)) {
-                return MathUtil.parseDouble(loreStep);
-            }
-        }
-        return 0.0;
-    }
+      for(int var3 = 0; var3 < var4; ++var3) {
+         PowerClickEnum click = var5[var3];
+         if (lore.contains(this.getKeyClick(click, true))) {
+            return click;
+         }
+      }
 
-    public final PowerEnum getPower(final ItemStack item, final PowerClickEnum click) {
-        final int line = this.getLineClick(item, click);
-        if (line != -1) {
-            final String lore = EquipmentUtil.getLores(item).get(line - 1);
-            return this.getPower(lore);
-        }
-        return null;
-    }
+      return null;
+   }
 
-    public final PowerEnum getPower(final String lore) {
-        if (lore.contains(MainConfig.KEY_COMMAND)) {
-            return PowerEnum.COMMAND;
-        }
-        if (lore.contains(MainConfig.KEY_SHOOT)) {
-            return PowerEnum.SHOOT;
-        }
-        if (lore.contains(MainConfig.KEY_SPECIAL)) {
-            return PowerEnum.SPECIAL;
-        }
-        return null;
-    }
+   public final double getCooldown(String lore) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      String[] loreCheck = lore.split(MainConfig.KEY_COOLDOWN);
+      if (loreCheck.length > 1) {
+         String colorPowerCooldown = mainConfig.getPowerColorCooldown();
+         String loreStep = loreCheck[1].replaceFirst(colorPowerCooldown, "");
+         if (MathUtil.isNumber(loreStep)) {
+            return MathUtil.parseDouble(loreStep);
+         }
+      }
 
-    public final boolean isPower(final String lore) {
-        return this.getPower(lore) != null;
-    }
+      return 0.0D;
+   }
 
-    public final boolean hasPower(final ItemStack item, final PowerClickEnum click) {
-        if (EquipmentUtil.hasLore(item)) {
-            final String lores = EquipmentUtil.getLores(item).toString();
-            final String key = this.getKeyClick(click, true);
-            return lores.contains(key);
-        }
-        return false;
-    }
+   public final PowerEnum getPower(ItemStack item, PowerClickEnum click) {
+      int line = this.getLineClick(item, click);
+      if (line != -1) {
+         String lore = (String)EquipmentUtil.getLores(item).get(line - 1);
+         return this.getPower(lore);
+      } else {
+         return null;
+      }
+   }
 
-    public final String getKeyClick(final PowerClickEnum click) {
-        return this.getKeyClick(click, false);
-    }
+   public final PowerEnum getPower(String lore) {
+      if (lore.contains(MainConfig.KEY_COMMAND)) {
+         return PowerEnum.COMMAND;
+      } else if (lore.contains(MainConfig.KEY_SHOOT)) {
+         return PowerEnum.SHOOT;
+      } else {
+         return lore.contains(MainConfig.KEY_SPECIAL) ? PowerEnum.SPECIAL : null;
+      }
+   }
 
-    public final String getKeyClick(final PowerClickEnum click, final boolean justCheck) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final String key = MainConfig.KEY_CLICK;
-        final String color = mainConfig.getPowerColorClick();
-        final String text = click.getText();
-        return justCheck ? (key + color + text) : (key + color + text + key + color);
-    }
+   public final boolean isPower(String lore) {
+      return this.getPower(lore) != null;
+   }
 
-    public final String getKeyCooldown(final double cooldown) {
-        return this.getKeyCooldown(cooldown, false);
-    }
+   public final boolean hasPower(ItemStack item, PowerClickEnum click) {
+      if (EquipmentUtil.hasLore(item)) {
+         String lores = EquipmentUtil.getLores(item).toString();
+         String key = this.getKeyClick(click, true);
+         if (lores.contains(key)) {
+            return true;
+         }
+      }
 
-    public final String getKeyCooldown(final double cooldown, final boolean justCheck) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final String key = MainConfig.KEY_COOLDOWN;
-        final String color = mainConfig.getPowerColorCooldown();
-        return justCheck ? (key + color) : (key + color + cooldown + key + color);
-    }
+      return false;
+   }
+
+   public final String getKeyClick(PowerClickEnum click) {
+      return this.getKeyClick(click, false);
+   }
+
+   public final String getKeyClick(PowerClickEnum click, boolean justCheck) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      String key = MainConfig.KEY_CLICK;
+      String color = mainConfig.getPowerColorClick();
+      String text = click.getText();
+      return justCheck ? key + color + text : key + color + text + key + color;
+   }
+
+   public final String getKeyCooldown(double cooldown) {
+      return this.getKeyCooldown(cooldown, false);
+   }
+
+   public final String getKeyCooldown(double cooldown, boolean justCheck) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      String key = MainConfig.KEY_COOLDOWN;
+      String color = mainConfig.getPowerColorCooldown();
+      return justCheck ? key + color : key + color + cooldown + key + color;
+   }
 }

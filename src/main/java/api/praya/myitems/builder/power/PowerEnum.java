@@ -1,38 +1,39 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package api.praya.myitems.builder.power;
 
 public enum PowerEnum {
-    COMMAND("COMMAND", 0),
-    SHOOT("SHOOT", 1),
-    SPECIAL("SPECIAL", 2);
+   COMMAND,
+   SHOOT,
+   SPECIAL;
 
-    PowerEnum(final String name, final int ordinal) {
-    }
+   public static final PowerEnum get(String power) {
+      String var1;
+      switch((var1 = power.toUpperCase()).hashCode()) {
+      case -2056513613:
+         if (var1.equals("LAUNCH")) {
+            return SHOOT;
+         }
+         break;
+      case -1290482535:
+         if (var1.equals("SPECIAL")) {
+            return SPECIAL;
+         }
+         break;
+      case 66842:
+         if (var1.equals("CMD")) {
+            return COMMAND;
+         }
+         break;
+      case 78875647:
+         if (var1.equals("SHOOT")) {
+            return SHOOT;
+         }
+         break;
+      case 1668377387:
+         if (var1.equals("COMMAND")) {
+            return COMMAND;
+         }
+      }
 
-    public static final PowerEnum get(final String power) {
-        final String upperCase;
-        switch (upperCase = power.toUpperCase()) {
-            case "LAUNCH": {
-                return PowerEnum.SHOOT;
-            }
-            case "SPECIAL": {
-                return PowerEnum.SPECIAL;
-            }
-            case "CMD": {
-                return PowerEnum.COMMAND;
-            }
-            case "SHOOT": {
-                return PowerEnum.SHOOT;
-            }
-            case "COMMAND": {
-                return PowerEnum.COMMAND;
-            }
-            default:
-                break;
-        }
-        return null;
-    }
+      return null;
+   }
 }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.listener.main;
 
 import api.praya.myitems.builder.lorestats.LoreStatsEnum;
@@ -17,20 +13,21 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ListenerPlayerItemDamage extends HandlerEvent implements Listener {
-    public ListenerPlayerItemDamage(final MyItems plugin) {
-        super(plugin);
-    }
+   public ListenerPlayerItemDamage(MyItems plugin) {
+      super(plugin);
+   }
 
-    @EventHandler
-    public void itemDamageEvent(final PlayerItemDamageEvent event) {
-        final GameManager gameManager = this.plugin.getGameManager();
-        final LoreStatsManager statsManager = gameManager.getStatsManager();
-        if (!event.isCancelled()) {
-            final BridgeTagsNBT bridgeTagsNBT = Bridge.getBridgeTagsNBT();
-            final ItemStack item = event.getItem();
-            if (bridgeTagsNBT.isUnbreakable(item) || statsManager.hasLoreStats(item, LoreStatsEnum.DURABILITY)) {
-                event.setCancelled(true);
-            }
-        }
-    }
+   @EventHandler
+   public void itemDamageEvent(PlayerItemDamageEvent event) {
+      GameManager gameManager = this.plugin.getGameManager();
+      LoreStatsManager statsManager = gameManager.getStatsManager();
+      if (!event.isCancelled()) {
+         BridgeTagsNBT bridgeTagsNBT = Bridge.getBridgeTagsNBT();
+         ItemStack item = event.getItem();
+         if (bridgeTagsNBT.isUnbreakable(item) || statsManager.hasLoreStats(item, LoreStatsEnum.DURABILITY)) {
+            event.setCancelled(true);
+         }
+      }
+
+   }
 }

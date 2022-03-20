@@ -3,7 +3,7 @@ Configuration:
     Version: 2.0
     #Version of the config.
     
-    Locale: "vi"
+    Locale: "en"
     #Locale language
   
   Metrics:
@@ -13,42 +13,42 @@ Configuration:
   Hook:
     Message: false
     #Send a message to console about dependencies information.
-
-  Utility:
+    
+  Utility:    
     Tooltip: "&8&l[&4&l?&8&l]"
     #Character for text tooltip.
     
     Currency: "$"
-      #Symbol currency.
-
+    #Symbol currency.
+      
   Effect:
     Range: 50
     #Max distance for send packet particle and sound.
-
+    
   List:
     Content: 5
     #Max of list content what will be displayed
-
+    
   Modifier:
     Enable_Vanilla_Damage: true
     #If false, vanilla damage will not working
     
-    Enable_Vanilla_Formula_Armor: false
+    Enable_Vanilla_Formula_Armor: false 
     #If false, vanilla protection will not working
     
-    Enable_Custom_Modifier: true
+    Enable_Custom_Modifier: true    
     #Enable feature attribute from this plugin
     
     Enable_Flat_Damage: false
     #If true, the damage receives is equal to its value
     
-    Enable_Balancing_System: true
+    Enable_Balancing_System: true      
     #Damage will set to balance
     
     Enable_Balancing_Mob: true
     #Mob receive damage will set to balance based on vanilla damage
     
-    Enable_Custom_Critical: true
+    Enable_Custom_Critical: true              
     #Custom critical effect
     
     Enable_Custom_Mob_Damage: true
@@ -97,40 +97,40 @@ Configuration:
     #Formula: "Damage / (1+Math.log10(1+(10*defense/modus_Value))"
     #Balancing: "Damage * 10 / modus_Value"
     
-    Scale_Damage_Vanilla: 1.0
+    Scale_Damage_Vanilla: 1.0  
     #Scale Damage from vanilla that will affect  
     
-    Scale_Damage_Custom: 1.0
+    Scale_Damage_Custom: 1.0  
     #Scale Damage from custom stats
     
-    Scale_Damage_Overall: 1.0
+    Scale_Damage_Overall: 1.0  
     #Scale Final damage
     
-    Scale_Defense_Overall: 0.5
+    Scale_Defense_Overall: 0.5 
     #Scale Damage reduction based on defense
     
     Scale_Defense_Physic: 0.25
     #Scale defense being hit damage by non-entity
     
-    Scale_Absorb_Effect: 0.5
+    Scale_Absorb_Effect: 0.5  
     #Scale damage will transfer to absorb point. ex: 0.8 mean 20% damage to health and 80% to absorb point
     
     Scale_Mob_Damage_Receive: 1.0
     #Mobs damage receive
     
-    Scale_Exp_OffHand: 0.5
+    Scale_Exp_OffHand: 0.5    
     #Exp will gain for OffHand scaled on base exp
     
-    Scale_Exp_Armor: 0.2
+    Scale_Exp_Armor: 0.2      
     #Exp will gain for Armor scaled on base exp
-
+    
   Drop:
     Exp_Player: 3.0
     #Exp drop when killing player
     
     Exp_Mobs: 1.0
     #Exp drop when killing a mob
-
+    
   Support:
     Type_Level: "Auto"
     #Available Level Type:
@@ -147,7 +147,7 @@ Configuration:
     #- SkillAPI
     #- SkillsPro
     #- Heroes
-
+    
   Stats:
     Enable_Item_Universal: false
     #If true, stats are not separated among weapon and armor
@@ -177,17 +177,17 @@ Configuration:
     Lore_Divider_Symbol: "&7/"
     Lore_Multiplier_Symbol: "&7x"
     
-    Scale_OffHand_Value: 0.5
+    Scale_OffHand_Value: 0.5  
     #Scale stats from offhand item
     
-    Scale_Up_Value: 0.05
+    Scale_Up_Value: 0.05      
     #Stats will increase every item is level up
     
     Scale_Armor_Shield: 1.0
     #Scale stats armor for item shield 
     #This option only active when item universal is disabled
     
-    Max_Level_Value: 20
+    Max_Level_Value: 20        
     #Max level for item
     
     Identifier_Damage: "Damage"
@@ -199,7 +199,7 @@ Configuration:
     Identifier_PvE_Defense: "PvE Defense"
     Identifier_Health: "Health"
     Identifier_Health_Regen: "Health Regen"
-    Identifier_Stamina_Max: "Max Stamina"
+    Identifier_Stamina_Max:  "Max Stamina"
     Identifier_Stamina_Regen: "Stamina Regen"
     Identifier_Attack_AoE_Radius: "AoE Radius"
     Identifier_Attack_AoE_Damage: "AoE Damage"
@@ -216,7 +216,7 @@ Configuration:
     Identifier_Lures_Endurance: "Lures Endurance"
     Identifier_Durability: "Durability"
     Identifier_Level: "Level"
-
+    
   Ability:
     Format: "&aChance of <chance> to apply <ability>"
     # PlaceHolder Ability:
@@ -252,7 +252,7 @@ Configuration:
       Identifier_Venom_Spread: "Venom Spread"
       Identifier_Weakness: "Weakness"
       Identifier_Wither: "Wither"
-
+      
   Passive:
     Enable_Grade_Calculation: true
     #If true, passive grade will be calculated by the same type of all equipment slot
@@ -282,7 +282,7 @@ Configuration:
       Identifier_Speed: "Movement"
       Identifier_Water_Breathing: "Water Breathing"
       Identifier_Haste: "Haste"
-
+      
     Debuff:
       Format: "&cApply debuff <debuff>"
       # PlaceHolder Debuffs_Format:
@@ -298,11 +298,11 @@ Configuration:
       Identifier_Fatigue: "Fatigue"
       Identifier_Wither: "Wither"
       Identifier_Unluck: "Unluck"
-
+    
   Power:
     Enable_Message_Cooldown: true
-      #If true, will send message power cooldown to the player
-
+    #If true, will send message power cooldown to the player
+     
     Format: "&6<click>&f&l: &7<type> &8&l[&c<cooldown> Seconds&8&l]"
     # PlaceHolder Power:
     # <click> : Type of interact click
@@ -324,20 +324,20 @@ Configuration:
       Identifier_Small_Fireball: "Small Fireball"
       Identifier_Large_Fireball: "Large Fireball"
       Identifier_Wither_Skull: "Wither Skull"
-
+      
     Special:
       Identifier_Blink: "Blink"
       Identifier_Fissure: "Fissure"
       Identifier_Ice_Spikes: "Ice Spikes"
       Identifier_Amaterasu: "Amaterasu"
       Identifier_Nero_Beam: "Nero Beam"
-
+    
   Element:
     Format: "&7&l[&4&l!&7&l] &r<element>&f&l: <value>"
     # PlaceHolder Element_Format:
     # <element> = Key Element
     # <value> = Value Element
-
+    
   Socket:
     Format_Slot: "&8&l- &7< <slot> >"
     # PlaceHolder Socket_Format:
@@ -367,14 +367,14 @@ Configuration:
         Display_Name: "&8[&aSocket Rod&8]"
         Material: "STICK"
         Lores:
-          - "&7Use this rod to unlock slot socket"
+        - "&7Use this rod to unlock slot socket"
       
       Rod_Remove:
         Display_Name: "&8[&cDesocket Rod&8]"
         Material: "STICK"
         Lores:
-          - "&7Use this rod to remove socket"
-
+        - "&7Use this rod to remove socket"
+    
   Requirement:
     Format_Level: "&cRequire <level> level to use."
     # Placeholder:
@@ -394,15 +394,15 @@ Configuration:
     Format_Soul_Bound: "&cSouldbound to <player>"
     # Placeholder:
     # <player> = Owner of the item
-
+    
   Set:
     Format:
-      - ""
-      - "&6<item_set_name> Set &7(<item_set_total>/<item_set_max>)"
-      - "<list_item_set_component>"
-      - ""
-      - "&6Set Bonus:"
-      - "<list_item_set_bonus>"
+    - ""
+    - "&6<item_set_name> Set &7(<item_set_total>/<item_set_max>)"
+    - "<list_item_set_component>"
+    - ""
+    - "&6Set Bonus:"
+    - "<list_item_set_bonus>"
     # Placeholder:
     # <item_set_name> = Name of item set
     # <item_set_total> = Total set that used by player
@@ -423,7 +423,7 @@ Configuration:
     Lore_Component_Inactive: "&8"
     Lore_Bonus_Active: "&f"
     Lore_Bonus_Inactive: "&8"
-
+    
   Misc:
     Enable_Particle_Potion: false
     #Show default particle when applying the potion to the player

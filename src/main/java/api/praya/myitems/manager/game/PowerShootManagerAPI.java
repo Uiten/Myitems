@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package api.praya.myitems.manager.game;
 
 import api.praya.myitems.builder.power.PowerClickEnum;
@@ -12,17 +8,17 @@ import com.praya.myitems.manager.game.PowerShootManager;
 import core.praya.agarthalib.enums.branch.ProjectileEnum;
 
 public class PowerShootManagerAPI extends HandlerManager {
-    protected PowerShootManagerAPI(final MyItems plugin) {
-        super(plugin);
-    }
+   protected PowerShootManagerAPI(MyItems plugin) {
+      super(plugin);
+   }
 
-    public final String getTextPowerShoot(final PowerClickEnum click, final ProjectileEnum projectile, final double cooldown) {
-        return this.getPowerShootManager().getTextPowerShoot(click, projectile, cooldown);
-    }
+   public final String getTextPowerShoot(PowerClickEnum click, ProjectileEnum projectile, double cooldown) {
+      return this.getPowerShootManager().getTextPowerShoot(click, projectile, cooldown);
+   }
 
-    private final PowerShootManager getPowerShootManager() {
-        final GameManager gameManager = this.plugin.getGameManager();
-        final PowerShootManager powerShootManager = gameManager.getPowerManager().getPowerShootManager();
-        return powerShootManager;
-    }
+   private final PowerShootManager getPowerShootManager() {
+      GameManager gameManager = this.plugin.getGameManager();
+      PowerShootManager powerShootManager = gameManager.getPowerManager().getPowerShootManager();
+      return powerShootManager;
+   }
 }

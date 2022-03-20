@@ -42,17 +42,17 @@ Air_Shock:
   Max_Grade: 10
   Scale_Base_Additional_Damage: 0.5
   Scale_Base_Percent_Damage: 5.0
-
+  
 Bad_Luck:
   Max_Grade: 10
   Base_Duration_Effect: 60
   Scale_Duration_Effect: 30
-
+  
 Blind:
   Max_Grade: 10
   Base_Duration_Effect: 40
   Scale_Duration_Effect: 20
-
+  
 Bubble_Deflector:
   Max_Grade: 10
   Base_Duration_Effect: 20
@@ -64,19 +64,19 @@ Bubble_Deflector:
 
 Cannibalism:
   Max_Grade: 10
-
+  
 Confuse:
   Max_Grade: 10
   Base_Duration_Effect: 40
   Scale_Duration_Effect: 20
-
+  
 Curse:
   Max_Grade: 10
   Base_Duration_Effect: 20
   Scale_Duration_Effect: 10
   Scale_Base_Bonus_Damage: 0.5
   Scale_Base_Percent_Damage: 2.5
-
+  
 Dark_Flame:
   Max_Grade: 10
   Base_Duration_Effect: 50
@@ -131,7 +131,7 @@ Poison:
   Max_Grade: 10
   Base_Duration_Effect: 40
   Scale_Duration_Effect: 20
-
+  
 Roots:
   Max_Grade: 10
   Base_Duration_Effect: 20
@@ -141,15 +141,15 @@ Slow:
   Max_Grade: 10
   Base_Duration_Effect: 40
   Scale_Duration_Effect: 20
-
+  
 Tired:
   Max_Grade: 10
   Base_Duration_Effect: 40
   Scale_Duration_Effect: 20
-
+  
 Vampirism:
   Max_Grade: 10
-
+  
 Venom_Blast:
   Max_Grade: 10
   Base_Duration_Effect: 20
@@ -158,7 +158,7 @@ Venom_Blast:
   Scale_Base_Percent_Damage: 10
   Scale_Cast_Bonus_Damage: 0.5
   Scale_Cast_Percent_Damage: 10
-
+  
 Venom_Spread:
   Max_Grade: 10
   Base_Duration_Effect: 40
@@ -167,12 +167,12 @@ Venom_Spread:
   Scale_Base_Percent_Damage: 5
   Scale_Cast_Bonus_Damage: 0
   Scale_Cast_Percent_Damage: 5
-
+  
 Weak:
   Max_Grade: 10
   Base_Duration_Effect: 40
   Scale_Duration_Effect: 20
-
+  
 Wither:
   Max_Grade: 10
   Base_Duration_Effect: 30

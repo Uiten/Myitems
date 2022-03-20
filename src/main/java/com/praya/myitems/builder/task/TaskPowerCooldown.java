@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.task;
 
 import api.praya.myitems.builder.player.PlayerPowerCooldown;
@@ -18,87 +14,109 @@ import com.praya.myitems.utility.main.ProjectileUtil;
 import core.praya.agarthalib.bridge.unity.Bridge;
 import core.praya.agarthalib.enums.branch.ProjectileEnum;
 import core.praya.agarthalib.enums.branch.SoundEnum;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Set;
-
 public class TaskPowerCooldown extends HandlerTask implements Runnable {
-    private final HashMap<String, String> mapPlaceholder;
+   private final HashMap<String, String> mapPlaceholder = new HashMap();
 
-    public TaskPowerCooldown(final MyItems plugin) {
-        super(plugin);
-        this.mapPlaceholder = new HashMap<String, String>();
-    }
+   public TaskPowerCooldown(MyItems plugin) {
+      super(plugin);
+   }
 
-    @Override
-    public void run() {
-        final PluginManager pluginManager = this.plugin.getPluginManager();
-        final LanguageManager lang = pluginManager.getLanguageManager();
-        final PlayerManager playerManager = this.plugin.getPlayerManager();
-        final PlayerPowerManager playerPowerManager = playerManager.getPlayerPowerManager();
-        for (final Player player : PlayerUtil.getOnlinePlayers()) {
-            final PlayerPowerCooldown playerPowerCooldown = playerPowerManager.getPlayerPowerCooldown(player);
-            final Set<String> cooldownCommandKeySet = playerPowerCooldown.getCooldownCommandKeySet();
-            final Set<ProjectileEnum> cooldownProjectileKeySet = playerPowerCooldown.getCooldownProjectileKeySet();
-            final Set<PowerSpecialEnum> cooldownSpecialKeySet = playerPowerCooldown.getCooldownSpecialKeySet();
+   public void run() {
+      PluginManager pluginManager = this.plugin.getPluginManager();
+      LanguageManager lang = pluginManager.getLanguageManager();
+      PlayerManager playerManager = this.plugin.getPlayerManager();
+      PlayerPowerManager playerPowerManager = playerManager.getPlayerPowerManager();
+      Iterator var6 = PlayerUtil.getOnlinePlayers().iterator();
+
+      while(true) {
+         Player player;
+         PlayerPowerCooldown playerPowerCooldown;
+         Set cooldownSpecialKeySet;
+         Object[] arrayObjectSpecial;
+         Object objectSpecial;
+         int var13;
+         int var14;
+         Object[] var15;
+         Location location;
+         String message;
+         do {
+            if (!var6.hasNext()) {
+               return;
+            }
+
+            player = (Player)var6.next();
+            playerPowerCooldown = playerPowerManager.getPlayerPowerCooldown(player);
+            Set<String> cooldownCommandKeySet = playerPowerCooldown.getCooldownCommandKeySet();
+            Set<ProjectileEnum> cooldownProjectileKeySet = playerPowerCooldown.getCooldownProjectileKeySet();
+            cooldownSpecialKeySet = playerPowerCooldown.getCooldownSpecialKeySet();
             if (!cooldownCommandKeySet.isEmpty()) {
-                final Object[] arrayObjectCommand = cooldownCommandKeySet.toArray();
-                Object[] array;
-                for (int length = (array = arrayObjectCommand).length, i = 0; i < length; ++i) {
-                    final Object objectCommand = array[i];
-                    final String keyCommand = (String) objectCommand;
-                    if (!playerPowerCooldown.isPowerCommandCooldown(keyCommand)) {
-                        final Location location = player.getLocation();
-                        String message = lang.getText(player, "Power_Command_Refresh");
-                        this.mapPlaceholder.clear();
-                        this.mapPlaceholder.put("power", keyCommand);
-                        message = TextUtil.placeholder(this.mapPlaceholder, message);
-                        playerPowerCooldown.removePowerCommandCooldown(keyCommand);
-                        Bridge.getBridgeSound().playSound(player, location, SoundEnum.BLOCK_WOOD_BUTTON_CLICK_ON, 1.0f, 1.0f);
-                        PlayerUtil.sendMessage(player, message);
-                    }
-                }
+               arrayObjectSpecial = cooldownCommandKeySet.toArray();
+               var15 = arrayObjectSpecial;
+               var14 = arrayObjectSpecial.length;
+
+               for(var13 = 0; var13 < var14; ++var13) {
+                  objectSpecial = var15[var13];
+                  String keyCommand = (String)objectSpecial;
+                  if (!playerPowerCooldown.isPowerCommandCooldown(keyCommand)) {
+                     location = player.getLocation();
+                     message = lang.getText((LivingEntity)player, "Power_Command_Refresh");
+                     this.mapPlaceholder.clear();
+                     this.mapPlaceholder.put("power", keyCommand);
+                     message = TextUtil.placeholder(this.mapPlaceholder, message);
+                     playerPowerCooldown.removePowerCommandCooldown(keyCommand);
+                     Bridge.getBridgeSound().playSound(player, location, SoundEnum.BLOCK_WOOD_BUTTON_CLICK_ON, 1.0F, 1.0F);
+                     PlayerUtil.sendMessage(player, message);
+                  }
+               }
             }
+
             if (!cooldownProjectileKeySet.isEmpty()) {
-                final Object[] arrayObjectProjectile = cooldownProjectileKeySet.toArray();
-                Object[] array2;
-                for (int length2 = (array2 = arrayObjectProjectile).length, j = 0; j < length2; ++j) {
-                    final Object objectProjectile = array2[j];
-                    final ProjectileEnum keyProjectile = (ProjectileEnum) objectProjectile;
-                    if (!playerPowerCooldown.isPowerShootCooldown(keyProjectile)) {
-                        final Location location = player.getLocation();
-                        String message = lang.getText(player, "Power_Shoot_Refresh");
-                        this.mapPlaceholder.clear();
-                        this.mapPlaceholder.put("power", ProjectileUtil.getText(keyProjectile));
-                        message = TextUtil.placeholder(this.mapPlaceholder, message);
-                        playerPowerCooldown.removePowerShootCooldown(keyProjectile);
-                        Bridge.getBridgeSound().playSound(player, location, SoundEnum.BLOCK_WOOD_BUTTON_CLICK_ON, 1.0f, 1.0f);
-                        PlayerUtil.sendMessage(player, message);
-                    }
-                }
+               arrayObjectSpecial = cooldownProjectileKeySet.toArray();
+               var15 = arrayObjectSpecial;
+               var14 = arrayObjectSpecial.length;
+
+               for(var13 = 0; var13 < var14; ++var13) {
+                  objectSpecial = var15[var13];
+                  ProjectileEnum keyProjectile = (ProjectileEnum)objectSpecial;
+                  if (!playerPowerCooldown.isPowerShootCooldown(keyProjectile)) {
+                     location = player.getLocation();
+                     message = lang.getText((LivingEntity)player, "Power_Shoot_Refresh");
+                     this.mapPlaceholder.clear();
+                     this.mapPlaceholder.put("power", ProjectileUtil.getText(keyProjectile));
+                     message = TextUtil.placeholder(this.mapPlaceholder, message);
+                     playerPowerCooldown.removePowerShootCooldown(keyProjectile);
+                     Bridge.getBridgeSound().playSound(player, location, SoundEnum.BLOCK_WOOD_BUTTON_CLICK_ON, 1.0F, 1.0F);
+                     PlayerUtil.sendMessage(player, message);
+                  }
+               }
             }
-            if (!cooldownSpecialKeySet.isEmpty()) {
-                final Object[] arrayObjectSpecial = cooldownSpecialKeySet.toArray();
-                Object[] array3;
-                for (int length3 = (array3 = arrayObjectSpecial).length, k = 0; k < length3; ++k) {
-                    final Object objectSpecial = array3[k];
-                    final PowerSpecialEnum keySpecial = (PowerSpecialEnum) objectSpecial;
-                    if (!playerPowerCooldown.isPowerSpecialCooldown(keySpecial)) {
-                        final Location location = player.getLocation();
-                        String message = lang.getText(player, "Power_Special_Refresh");
-                        this.mapPlaceholder.clear();
-                        this.mapPlaceholder.put("power", keySpecial.getText());
-                        message = TextUtil.placeholder(this.mapPlaceholder, message);
-                        playerPowerCooldown.removePowerSpecialCooldown(keySpecial);
-                        Bridge.getBridgeSound().playSound(player, location, SoundEnum.BLOCK_WOOD_BUTTON_CLICK_ON, 1.0f, 1.0f);
-                        PlayerUtil.sendMessage(player, message);
-                    }
-                }
+         } while(cooldownSpecialKeySet.isEmpty());
+
+         arrayObjectSpecial = cooldownSpecialKeySet.toArray();
+         var15 = arrayObjectSpecial;
+         var14 = arrayObjectSpecial.length;
+
+         for(var13 = 0; var13 < var14; ++var13) {
+            objectSpecial = var15[var13];
+            PowerSpecialEnum keySpecial = (PowerSpecialEnum)objectSpecial;
+            if (!playerPowerCooldown.isPowerSpecialCooldown(keySpecial)) {
+               location = player.getLocation();
+               message = lang.getText((LivingEntity)player, "Power_Special_Refresh");
+               this.mapPlaceholder.clear();
+               this.mapPlaceholder.put("power", keySpecial.getText());
+               message = TextUtil.placeholder(this.mapPlaceholder, message);
+               playerPowerCooldown.removePowerSpecialCooldown(keySpecial);
+               Bridge.getBridgeSound().playSound(player, location, SoundEnum.BLOCK_WOOD_BUTTON_CLICK_ON, 1.0F, 1.0F);
+               PlayerUtil.sendMessage(player, message);
             }
-        }
-    }
+         }
+      }
+   }
 }

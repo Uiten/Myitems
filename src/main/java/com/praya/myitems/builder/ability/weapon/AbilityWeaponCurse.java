@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.ability.weapon;
 
 import api.praya.myitems.builder.ability.AbilityWeapon;
@@ -22,121 +18,119 @@ import core.praya.agarthalib.bridge.unity.Bridge;
 import core.praya.agarthalib.builder.message.MessageBuild;
 import core.praya.agarthalib.enums.branch.ParticleEnum;
 import core.praya.agarthalib.enums.branch.SoundEnum;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.projectiles.ProjectileSource;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
 public class AbilityWeaponCurse extends AbilityWeapon implements AbilityWeaponAttributeBaseDamage, AbilityWeaponAttributeEffect {
-    private static final String ABILITY_ID = "Curse";
+   private static final String ABILITY_ID = "Curse";
 
-    private AbilityWeaponCurse(final MyItems plugin, final String id) {
-        super(plugin, id);
-    }
+   private AbilityWeaponCurse(MyItems plugin, String id) {
+      super(plugin, id);
+   }
 
-    public static final AbilityWeaponCurse getInstance() {
-        return AbilityCurseHelper.instance;
-    }
+   public static final AbilityWeaponCurse getInstance() {
+      return AbilityWeaponCurse.AbilityCurseHelper.instance;
+   }
 
-    @Override
-    public String getKeyLore() {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        return mainConfig.getAbilityWeaponIdentifierCurse();
-    }
+   public String getKeyLore() {
+      MainConfig mainConfig = MainConfig.getInstance();
+      return mainConfig.getAbilityWeaponIdentifierCurse();
+   }
 
-    @Override
-    public List<String> getDescription() {
-        return null;
-    }
+   public List<String> getDescription() {
+      return null;
+   }
 
-    @Override
-    public int getMaxGrade() {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Curse");
-        return abilityWeaponProperties.getMaxGrade();
-    }
+   public int getMaxGrade() {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Curse");
+      return abilityWeaponProperties.getMaxGrade();
+   }
 
-    @Override
-    public double getBaseBonusDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Curse");
-        final double baseBonusDamage = grade * abilityWeaponProperties.getScaleBaseBonusDamage();
-        return baseBonusDamage;
-    }
+   public double getBaseBonusDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Curse");
+      double baseBonusDamage = (double)grade * abilityWeaponProperties.getScaleBaseBonusDamage();
+      return baseBonusDamage;
+   }
 
-    @Override
-    public double getBasePercentDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Curse");
-        final double basePercentDamage = grade * abilityWeaponProperties.getScaleBasePercentDamage();
-        return basePercentDamage;
-    }
+   public double getBasePercentDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Curse");
+      double basePercentDamage = (double)grade * abilityWeaponProperties.getScaleBasePercentDamage();
+      return basePercentDamage;
+   }
 
-    @Override
-    public int getEffectDuration(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Curse");
-        return abilityWeaponProperties.getTotalDuration(grade);
-    }
+   public int getEffectDuration(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Curse");
+      return abilityWeaponProperties.getTotalDuration(grade);
+   }
 
-    @Override
-    public void cast(final Entity caster, final Entity target, final int grade, final double damage) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final PluginManager pluginManager = plugin.getPluginManager();
-        final LanguageManager lang = pluginManager.getLanguageManager();
-        final MainConfig mainConfig = MainConfig.getInstance();
-        LivingEntity attacker;
-        if (caster instanceof Projectile) {
-            final Projectile projectile = (Projectile) caster;
-            final ProjectileSource projectileSource = projectile.getShooter();
-            if (projectileSource == null || !(projectileSource instanceof LivingEntity)) {
-                return;
-            }
-            attacker = (LivingEntity) projectileSource;
-        } else {
-            attacker = (LivingEntity) caster;
-        }
-        if (target instanceof LivingEntity) {
-            final LivingEntity victims = (LivingEntity) target;
-            final Location location = victims.getLocation();
-            final int duration = this.getEffectDuration(grade);
-            final double seconds = MathUtil.roundNumber(duration / 20.0);
-            final MessageBuild messageAttacker = lang.getMessage(attacker, "Ability_Curse_Attacker");
-            final MessageBuild messageVictims = lang.getMessage(victims, "Ability_Curse_Victims");
-            final Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
-            final HashMap<String, String> mapPlaceholder = new HashMap<String, String>();
-            mapPlaceholder.put("seconds", String.valueOf(seconds));
-            messageAttacker.sendMessage(attacker, mapPlaceholder);
-            messageVictims.sendMessage(victims, mapPlaceholder);
-            CustomEffectUtil.setCustomEffect(victims, MathUtil.convertTickToMilis(duration), PassiveEffectTypeEnum.CURSE);
-            Bridge.getBridgeParticle().playParticle(players, ParticleEnum.SPELL_WITCH, location, 25, 0.5, 0.25, 0.5, 0.10000000149011612);
-            Bridge.getBridgeSound().playSound(players, location, SoundEnum.ENTITY_ELDER_GUARDIAN_CURSE, 1.0f, 1.0f);
-        }
-    }
+   public void cast(Entity caster, Entity target, int grade, double damage) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      PluginManager pluginManager = plugin.getPluginManager();
+      LanguageManager lang = pluginManager.getLanguageManager();
+      MainConfig mainConfig = MainConfig.getInstance();
+      LivingEntity attacker;
+      if (caster instanceof Projectile) {
+         Projectile projectile = (Projectile)caster;
+         ProjectileSource projectileSource = projectile.getShooter();
+         if (projectileSource == null || !(projectileSource instanceof LivingEntity)) {
+            return;
+         }
 
-    private static class AbilityCurseHelper {
-        private static final AbilityWeaponCurse instance;
+         attacker = (LivingEntity)projectileSource;
+      } else {
+         attacker = (LivingEntity)caster;
+      }
 
-        static {
-            final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-            instance = new AbilityWeaponCurse(plugin, "Curse");
-        }
-    }
+      if (target instanceof LivingEntity) {
+         LivingEntity victims = (LivingEntity)target;
+         Location location = victims.getLocation();
+         int duration = this.getEffectDuration(grade);
+         double seconds = MathUtil.roundNumber((double)duration / 20.0D);
+         MessageBuild messageAttacker = lang.getMessage(attacker, "Ability_Curse_Attacker");
+         MessageBuild messageVictims = lang.getMessage(victims, "Ability_Curse_Victims");
+         Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
+         HashMap<String, String> mapPlaceholder = new HashMap();
+         mapPlaceholder.put("seconds", String.valueOf(seconds));
+         messageAttacker.sendMessage(attacker, mapPlaceholder);
+         messageVictims.sendMessage(victims, mapPlaceholder);
+         CustomEffectUtil.setCustomEffect(victims, MathUtil.convertTickToMilis(duration), PassiveEffectTypeEnum.CURSE);
+         Bridge.getBridgeParticle().playParticle(players, ParticleEnum.SPELL_WITCH, location, 25, 0.5D, 0.25D, 0.5D, 0.10000000149011612D);
+         Bridge.getBridgeSound().playSound(players, location, SoundEnum.ENTITY_ELDER_GUARDIAN_CURSE, 1.0F, 1.0F);
+      }
+
+   }
+
+   // $FF: synthetic method
+   AbilityWeaponCurse(MyItems var1, String var2, AbilityWeaponCurse var3) {
+      this(var1, var2);
+   }
+
+   private static class AbilityCurseHelper {
+      private static final AbilityWeaponCurse instance;
+
+      static {
+         MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+         instance = new AbilityWeaponCurse(plugin, "Curse", (AbilityWeaponCurse)null);
+      }
+   }
 }

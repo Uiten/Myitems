@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.ability.weapon;
 
 import api.praya.myitems.builder.ability.AbilityWeapon;
@@ -16,98 +12,95 @@ import com.praya.myitems.manager.game.GameManager;
 import core.praya.agarthalib.bridge.unity.Bridge;
 import core.praya.agarthalib.enums.branch.ParticleEnum;
 import core.praya.agarthalib.enums.branch.SoundEnum;
+import java.util.Collection;
+import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Collection;
-import java.util.List;
-
 public class AbilityWeaponFlame extends AbilityWeapon implements AbilityWeaponAttributeBaseDamage, AbilityWeaponAttributeEffect {
-    private static final String ABILITY_ID = "Flame";
+   private static final String ABILITY_ID = "Flame";
 
-    private AbilityWeaponFlame(final MyItems plugin, final String id) {
-        super(plugin, id);
-    }
+   private AbilityWeaponFlame(MyItems plugin, String id) {
+      super(plugin, id);
+   }
 
-    public static final AbilityWeaponFlame getInstance() {
-        return AbilityFlameHelper.instance;
-    }
+   public static final AbilityWeaponFlame getInstance() {
+      return AbilityWeaponFlame.AbilityFlameHelper.instance;
+   }
 
-    @Override
-    public String getKeyLore() {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        return mainConfig.getAbilityWeaponIdentifierFlame();
-    }
+   public String getKeyLore() {
+      MainConfig mainConfig = MainConfig.getInstance();
+      return mainConfig.getAbilityWeaponIdentifierFlame();
+   }
 
-    @Override
-    public List<String> getDescription() {
-        return null;
-    }
+   public List<String> getDescription() {
+      return null;
+   }
 
-    @Override
-    public int getMaxGrade() {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame");
-        return abilityWeaponProperties.getMaxGrade();
-    }
+   public int getMaxGrade() {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame");
+      return abilityWeaponProperties.getMaxGrade();
+   }
 
-    @Override
-    public double getBaseBonusDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame");
-        final double baseBonusDamage = grade * abilityWeaponProperties.getScaleBaseBonusDamage();
-        return baseBonusDamage;
-    }
+   public double getBaseBonusDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame");
+      double baseBonusDamage = (double)grade * abilityWeaponProperties.getScaleBaseBonusDamage();
+      return baseBonusDamage;
+   }
 
-    @Override
-    public double getBasePercentDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame");
-        final double basePercentDamage = grade * abilityWeaponProperties.getScaleBasePercentDamage();
-        return basePercentDamage;
-    }
+   public double getBasePercentDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame");
+      double basePercentDamage = (double)grade * abilityWeaponProperties.getScaleBasePercentDamage();
+      return basePercentDamage;
+   }
 
-    @Override
-    public int getEffectDuration(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame");
-        return abilityWeaponProperties.getTotalDuration(grade);
-    }
+   public int getEffectDuration(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Flame");
+      return abilityWeaponProperties.getTotalDuration(grade);
+   }
 
-    @Override
-    public void cast(final Entity caster, final Entity target, final int grade, final double damage) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        if (target instanceof LivingEntity) {
-            final LivingEntity victims = (LivingEntity) target;
-            final Location location = victims.getEyeLocation();
-            final int duration = this.getEffectDuration(grade);
-            final int durationVictims = victims.getFireTicks();
-            final int durationTotal = duration + durationVictims;
-            final Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
-            Bridge.getBridgeParticle().playParticle(players, ParticleEnum.FLAME, location, 20, 0.3, 0.5, 0.3, 0.0);
-            Bridge.getBridgeSound().playSound(players, location, SoundEnum.ENTITY_BLAZE_SHOOT, 0.7f, 1.0f);
-            victims.setFireTicks(durationTotal);
-        }
-    }
+   public void cast(Entity caster, Entity target, int grade, double damage) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      if (target instanceof LivingEntity) {
+         LivingEntity victims = (LivingEntity)target;
+         Location location = victims.getEyeLocation();
+         int duration = this.getEffectDuration(grade);
+         int durationVictims = victims.getFireTicks();
+         int durationTotal = duration + durationVictims;
+         Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
+         Bridge.getBridgeParticle().playParticle(players, ParticleEnum.FLAME, location, 20, 0.3D, 0.5D, 0.3D, 0.0D);
+         Bridge.getBridgeSound().playSound(players, location, SoundEnum.ENTITY_BLAZE_SHOOT, 0.7F, 1.0F);
+         victims.setFireTicks(durationTotal);
+      }
 
-    private static class AbilityFlameHelper {
-        private static final AbilityWeaponFlame instance;
+   }
 
-        static {
-            final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-            instance = new AbilityWeaponFlame(plugin, "Flame");
-        }
-    }
+   // $FF: synthetic method
+   AbilityWeaponFlame(MyItems var1, String var2, AbilityWeaponFlame var3) {
+      this(var1, var2);
+   }
+
+   private static class AbilityFlameHelper {
+      private static final AbilityWeaponFlame instance;
+
+      static {
+         MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+         instance = new AbilityWeaponFlame(plugin, "Flame", (AbilityWeaponFlame)null);
+      }
+   }
 }

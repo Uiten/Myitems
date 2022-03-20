@@ -1,10 +1,11 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.command;
 
-import com.praya.agarthalib.utility.*;
+import com.praya.agarthalib.utility.EnchantmentUtil;
+import com.praya.agarthalib.utility.EquipmentUtil;
+import com.praya.agarthalib.utility.MathUtil;
+import com.praya.agarthalib.utility.PlayerUtil;
+import com.praya.agarthalib.utility.SenderUtil;
+import com.praya.agarthalib.utility.TextUtil;
 import com.praya.myitems.MyItems;
 import com.praya.myitems.builder.handler.HandlerCommand;
 import com.praya.myitems.manager.plugin.CommandManager;
@@ -14,6 +15,7 @@ import core.praya.agarthalib.bridge.unity.Bridge;
 import core.praya.agarthalib.builder.message.MessageBuild;
 import core.praya.agarthalib.enums.branch.SoundEnum;
 import core.praya.agarthalib.enums.main.Slot;
+import java.util.HashMap;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,74 +24,76 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-
 public class CommandEnchantAdd extends HandlerCommand implements CommandExecutor {
-    public CommandEnchantAdd(final MyItems plugin) {
-        super(plugin);
-    }
+   public CommandEnchantAdd(MyItems plugin) {
+      super(plugin);
+   }
 
-    protected static final boolean addEnchant(final CommandSender sender, final Command command, final String label, final String[] args) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final PluginManager pluginManager = plugin.getPluginManager();
-        final CommandManager commandManager = pluginManager.getCommandManager();
-        final LanguageManager lang = pluginManager.getLanguageManager();
-        if (!commandManager.checkPermission(sender, "Enchant_Add")) {
-            final String permission = commandManager.getPermission("Enchant_Add");
-            final MessageBuild message = lang.getMessage(sender, "Permission_Lack");
-            message.sendMessage(sender, "permission", permission);
-            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
-            return true;
-        }
-        if (!SenderUtil.isPlayer(sender)) {
-            final MessageBuild message2 = lang.getMessage(sender, "Console_Command_Forbiden");
-            message2.sendMessage(sender);
-            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
-            return true;
-        }
-        final Player player = PlayerUtil.parse(sender);
-        final ItemStack item = Bridge.getBridgeEquipment().getEquipment(player, Slot.MAINHAND);
-        if (!EquipmentUtil.isSolid(item)) {
-            final MessageBuild message3 = lang.getMessage(sender, "Item_MainHand_Empty");
-            message3.sendMessage(sender);
-            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
-            return true;
-        }
-        if (args.length < 2) {
-            final String tooltip = TextUtil.getJsonTooltip(lang.getText(sender, "Tooltip_Enchant_Add"));
-            final MessageBuild message4 = lang.getMessage(sender, "Argument_AddEnchant");
-            message4.sendMessage(sender, "tooltip_enchant_add", tooltip);
-            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
-            return true;
-        }
-        final String enchantmentName = args[0];
-        final String textGrade = args[1];
-        final Enchantment enchantment = EnchantmentUtil.getEnchantment(enchantmentName);
-        if (!MathUtil.isNumber(textGrade)) {
-            final MessageBuild message5 = lang.getMessage(sender, "Argument_Invalid_Value");
-            message5.sendMessage(sender);
-            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
-            return true;
-        }
-        if (enchantment == null) {
-            final MessageBuild message5 = lang.getMessage(sender, "Item_Enchantment_Not_Exist");
-            message5.sendMessage(sender, "enchantment", enchantmentName);
-            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
-            return true;
-        }
-        final MessageBuild message5 = lang.getMessage(sender, "MyItems_AddEnchant_Success");
-        final int grade = Math.max(1, MathUtil.parseInteger(textGrade));
-        final HashMap<String, String> mapPlaceholder = new HashMap<String, String>();
-        mapPlaceholder.put("enchantment", enchantment.getName());
-        mapPlaceholder.put("grade", String.valueOf(grade));
-        EquipmentUtil.addEnchantment(item, enchantment, grade);
-        message5.sendMessage(sender, mapPlaceholder);
-        SenderUtil.playSound(sender, SoundEnum.ENTITY_EXPERIENCE_ORB_PICKUP);
-        player.updateInventory();
-        return true;
-    }
+   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+      return addEnchant(sender, command, label, args);
+   }
 
-    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-        return addEnchant(sender, command, label, args);
-    }
+   protected static final boolean addEnchant(CommandSender sender, Command command, String label, String[] args) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      PluginManager pluginManager = plugin.getPluginManager();
+      CommandManager commandManager = pluginManager.getCommandManager();
+      LanguageManager lang = pluginManager.getLanguageManager();
+      if (!commandManager.checkPermission(sender, "Enchant_Add")) {
+         String permission = commandManager.getPermission("Enchant_Add");
+         MessageBuild message = lang.getMessage(sender, "Permission_Lack");
+         message.sendMessage(sender, "permission", permission);
+         SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
+         return true;
+      } else if (!SenderUtil.isPlayer(sender)) {
+         MessageBuild message = lang.getMessage(sender, "Console_Command_Forbiden");
+         message.sendMessage(sender);
+         SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
+         return true;
+      } else {
+         Player player = PlayerUtil.parse(sender);
+         ItemStack item = Bridge.getBridgeEquipment().getEquipment(player, Slot.MAINHAND);
+         if (!EquipmentUtil.isSolid(item)) {
+            MessageBuild message = lang.getMessage(sender, "Item_MainHand_Empty");
+            message.sendMessage(sender);
+            SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
+            return true;
+         } else {
+            String enchantmentName;
+            if (args.length < 2) {
+               enchantmentName = TextUtil.getJsonTooltip(lang.getText(sender, "Tooltip_Enchant_Add"));
+               MessageBuild message = lang.getMessage(sender, "Argument_AddEnchant");
+               message.sendMessage(sender, "tooltip_enchant_add", enchantmentName);
+               SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
+               return true;
+            } else {
+               enchantmentName = args[0];
+               String textGrade = args[1];
+               Enchantment enchantment = EnchantmentUtil.getEnchantment(enchantmentName);
+               MessageBuild message;
+               if (!MathUtil.isNumber(textGrade)) {
+                  message = lang.getMessage(sender, "Argument_Invalid_Value");
+                  message.sendMessage(sender);
+                  SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
+                  return true;
+               } else if (enchantment == null) {
+                  message = lang.getMessage(sender, "Item_Enchantment_Not_Exist");
+                  message.sendMessage(sender, "enchantment", enchantmentName);
+                  SenderUtil.playSound(sender, SoundEnum.ENTITY_BLAZE_DEATH);
+                  return true;
+               } else {
+                  message = lang.getMessage(sender, "MyItems_AddEnchant_Success");
+                  int grade = Math.max(1, MathUtil.parseInteger(textGrade));
+                  HashMap<String, String> mapPlaceholder = new HashMap();
+                  mapPlaceholder.put("enchantment", enchantment.getName());
+                  mapPlaceholder.put("grade", String.valueOf(grade));
+                  EquipmentUtil.addEnchantment(item, enchantment, grade);
+                  message.sendMessage(sender, mapPlaceholder);
+                  SenderUtil.playSound(sender, SoundEnum.ENTITY_EXPERIENCE_ORB_PICKUP);
+                  player.updateInventory();
+                  return true;
+               }
+            }
+         }
+      }
+   }
 }

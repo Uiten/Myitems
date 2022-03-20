@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.passive.buff;
 
 import api.praya.myitems.builder.passive.PassiveEffectEnum;
@@ -13,27 +9,26 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class BuffAbsorb extends PassiveEffect {
-    private static final PassiveEffectEnum buff;
+   private static final PassiveEffectEnum buff;
 
-    static {
-        buff = PassiveEffectEnum.ABSORB;
-    }
+   static {
+      buff = PassiveEffectEnum.ABSORB;
+   }
 
-    public BuffAbsorb() {
-        super(BuffAbsorb.buff, 1);
-    }
+   public BuffAbsorb() {
+      super(buff, 1);
+   }
 
-    public BuffAbsorb(final int grade) {
-        super(BuffAbsorb.buff, grade);
-    }
+   public BuffAbsorb(int grade) {
+      super(buff, grade);
+   }
 
-    @Override
-    public final void cast(final Player player) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final PotionEffectType potionType = this.getPotion();
-        final boolean isEnableParticle = mainConfig.isMiscEnableParticlePotion();
-        final PotionEffect potion = PotionUtil.createPotion(potionType, 96000, this.grade, true, isEnableParticle);
-        player.removePotionEffect(potionType);
-        player.addPotionEffect(potion);
-    }
+   public final void cast(Player player) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      PotionEffectType potionType = this.getPotion();
+      boolean isEnableParticle = mainConfig.isMiscEnableParticlePotion();
+      PotionEffect potion = PotionUtil.createPotion(potionType, 96000, this.grade, true, isEnableParticle);
+      player.removePotionEffect(potionType);
+      player.addPotionEffect(potion);
+   }
 }

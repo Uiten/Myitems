@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package api.praya.myitems.builder.event;
 
 import api.praya.myitems.builder.power.PowerClickEnum;
@@ -13,61 +9,55 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
 public class PowerPreCastEvent extends Event implements Cancellable {
-    private static final HandlerList handlers;
+   private static final HandlerList handlers = new HandlerList();
+   private boolean cancel = false;
+   private final Player player;
+   private final PowerEnum power;
+   private final PowerClickEnum click;
+   private final ItemStack item;
+   private final String lore;
 
-    static {
-        handlers = new HandlerList();
-    }
+   public PowerPreCastEvent(Player player, PowerEnum power, PowerClickEnum click, ItemStack item, String lore) {
+      this.player = player;
+      this.power = power;
+      this.click = click;
+      this.item = item;
+      this.lore = lore;
+   }
 
-    private final Player player;
-    private final PowerEnum power;
-    private final PowerClickEnum click;
-    private final ItemStack item;
-    private final String lore;
-    private boolean cancel;
+   public final Player getPlayer() {
+      return this.player;
+   }
 
-    public PowerPreCastEvent(final Player player, final PowerEnum power, final PowerClickEnum click, final ItemStack item, final String lore) {
-        this.cancel = false;
-        this.player = player;
-        this.power = power;
-        this.click = click;
-        this.item = item;
-        this.lore = lore;
-    }
+   public final PowerEnum getPower() {
+      return this.power;
+   }
 
-    public static HandlerList getHandlerList() {
-        return PowerPreCastEvent.handlers;
-    }
+   public final PowerClickEnum getClick() {
+      return this.click;
+   }
 
-    public final Player getPlayer() {
-        return this.player;
-    }
+   public final ItemStack getItem() {
+      return this.item;
+   }
 
-    public final PowerEnum getPower() {
-        return this.power;
-    }
+   public final String getLore() {
+      return this.lore;
+   }
 
-    public final PowerClickEnum getClick() {
-        return this.click;
-    }
+   public HandlerList getHandlers() {
+      return handlers;
+   }
 
-    public final ItemStack getItem() {
-        return this.item;
-    }
+   public static HandlerList getHandlerList() {
+      return handlers;
+   }
 
-    public final String getLore() {
-        return this.lore;
-    }
+   public boolean isCancelled() {
+      return this.cancel;
+   }
 
-    public HandlerList getHandlers() {
-        return PowerPreCastEvent.handlers;
-    }
-
-    public boolean isCancelled() {
-        return this.cancel;
-    }
-
-    public void setCancelled(final boolean cancel) {
-        this.cancel = cancel;
-    }
+   public void setCancelled(boolean cancel) {
+      this.cancel = cancel;
+   }
 }

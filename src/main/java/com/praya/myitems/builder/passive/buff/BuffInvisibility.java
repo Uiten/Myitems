@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.passive.buff;
 
 import api.praya.myitems.builder.passive.PassiveEffectEnum;
@@ -12,51 +8,50 @@ import com.praya.myitems.builder.abs.PassiveEffect;
 import com.praya.myitems.config.plugin.MainConfig;
 import com.praya.myitems.manager.game.GameManager;
 import com.praya.myitems.manager.game.PassiveEffectManager;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class BuffInvisibility extends PassiveEffect {
-    private static final PassiveEffectEnum buff;
+   private static final PassiveEffectEnum buff;
 
-    static {
-        buff = PassiveEffectEnum.INVISIBILITY;
-    }
+   static {
+      buff = PassiveEffectEnum.INVISIBILITY;
+   }
 
-    public BuffInvisibility() {
-        super(BuffInvisibility.buff, 1);
-    }
+   public BuffInvisibility() {
+      super(buff, 1);
+   }
 
-    public BuffInvisibility(final int grade) {
-        super(BuffInvisibility.buff, grade);
-    }
+   public BuffInvisibility(int grade) {
+      super(buff, grade);
+   }
 
-    @Override
-    public final void cast(final Player player) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final PassiveEffectManager passiveEffectManager = gameManager.getPassiveEffectManager();
-        final MainConfig mainConfig = MainConfig.getInstance();
-        if (!passiveEffectManager.isPassiveEffectCooldown(BuffInvisibility.buff, player)) {
-            final PotionEffectType potionType = this.getPotion();
-            final int duration = this.getDuration();
-            final long cooldown = this.getCooldown();
-            final boolean isEnableParticle = mainConfig.isMiscEnableParticlePotion();
-            final PotionEffect potion = PotionUtil.createPotion(potionType, duration, this.grade, true, isEnableParticle);
-            player.addPotionEffect(potion);
-            passiveEffectManager.setPassiveEffectCooldown(BuffInvisibility.buff, player, cooldown);
-        }
-    }
+   public final void cast(Player player) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      PassiveEffectManager passiveEffectManager = gameManager.getPassiveEffectManager();
+      MainConfig mainConfig = MainConfig.getInstance();
+      if (!passiveEffectManager.isPassiveEffectCooldown(buff, player)) {
+         PotionEffectType potionType = this.getPotion();
+         int duration = this.getDuration();
+         long cooldown = this.getCooldown();
+         boolean isEnableParticle = mainConfig.isMiscEnableParticlePotion();
+         PotionEffect potion = PotionUtil.createPotion(potionType, duration, this.grade, true, isEnableParticle);
+         player.addPotionEffect(potion);
+         passiveEffectManager.setPassiveEffectCooldown(buff, player, cooldown);
+      }
 
-    private final int getDuration() {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        return (int) (mainConfig.getPassivePeriodEffect() * this.grade / 2.5 + 20.0);
-    }
+   }
 
-    private final long getCooldown() {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        return (long) (MathUtil.convertTickToMilis(mainConfig.getPassivePeriodEffect()) * BuffInvisibility.buff.getMaxGrade() / 2.5);
-    }
+   private final int getDuration() {
+      MainConfig mainConfig = MainConfig.getInstance();
+      return (int)((double)(mainConfig.getPassivePeriodEffect() * this.grade) / 2.5D + 20.0D);
+   }
+
+   private final long getCooldown() {
+      MainConfig mainConfig = MainConfig.getInstance();
+      return (long)((double)(MathUtil.convertTickToMilis(mainConfig.getPassivePeriodEffect()) * (long)buff.getMaxGrade()) / 2.5D);
+   }
 }

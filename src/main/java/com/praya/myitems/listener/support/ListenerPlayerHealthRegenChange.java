@@ -1,10 +1,7 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.listener.support;
 
 import api.praya.lifeessence.builder.event.PlayerHealthRegenChangeEvent;
+import api.praya.lifeessence.builder.event.PlayerHealthRegenChangeEvent.HealthRegenModifierEnum;
 import api.praya.myitems.builder.lorestats.LoreStatsArmor;
 import api.praya.myitems.builder.socket.SocketGemsProperties;
 import com.praya.myitems.MyItems;
@@ -19,25 +16,28 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 public class ListenerPlayerHealthRegenChange extends HandlerEvent implements Listener {
-    public ListenerPlayerHealthRegenChange(final MyItems plugin) {
-        super(plugin);
-    }
+   public ListenerPlayerHealthRegenChange(MyItems plugin) {
+      super(plugin);
+   }
 
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void eventPlayerHealthRegenChange(final PlayerHealthRegenChangeEvent event) {
-        final GameManager gameManager = this.plugin.getGameManager();
-        final LoreStatsManager statsManager = gameManager.getStatsManager();
-        final SocketManager socketManager = gameManager.getSocketManager();
-        if (!event.isCancelled()) {
-            final Player player = event.getPlayer();
-            final PlayerHealthRegenChangeEvent.HealthRegenModifierEnum healthRegenType = PlayerHealthRegenChangeEvent.HealthRegenModifierEnum.BONUS;
-            final LoreStatsArmor statsBuild = statsManager.getLoreStatsArmor(player);
-            final SocketGemsProperties socketBuild = socketManager.getSocketProperties(player);
-            final double healthRegenStats = statsBuild.getHealthRegen();
-            final double healthRegenSocket = socketBuild.getHealthRegen();
-            final double healthRegenBase = event.getOriginalHealthRegen(healthRegenType);
-            final double healthRegenResult = healthRegenStats + healthRegenSocket + healthRegenBase;
-            event.setHealthRegen(healthRegenType, healthRegenResult);
-        }
-    }
+   @EventHandler(
+      priority = EventPriority.NORMAL
+   )
+   public void eventPlayerHealthRegenChange(PlayerHealthRegenChangeEvent event) {
+      GameManager gameManager = this.plugin.getGameManager();
+      LoreStatsManager statsManager = gameManager.getStatsManager();
+      SocketManager socketManager = gameManager.getSocketManager();
+      if (!event.isCancelled()) {
+         Player player = event.getPlayer();
+         HealthRegenModifierEnum healthRegenType = HealthRegenModifierEnum.BONUS;
+         LoreStatsArmor statsBuild = statsManager.getLoreStatsArmor((LivingEntity)player);
+         SocketGemsProperties socketBuild = socketManager.getSocketProperties((LivingEntity)player);
+         double healthRegenStats = statsBuild.getHealthRegen();
+         double healthRegenSocket = socketBuild.getHealthRegen();
+         double healthRegenBase = event.getOriginalHealthRegen(healthRegenType);
+         double healthRegenResult = healthRegenStats + healthRegenSocket + healthRegenBase;
+         event.setHealthRegen(healthRegenType, healthRegenResult);
+      }
+
+   }
 }

@@ -1,13 +1,13 @@
 #-----=====[Dependency]=====-----#
 
 Soft_Dependency:
-  - "PlaceholderAPI"
-  - "MVdWPlaceholderAPI"
-  - "SkillAPI"
-  - "MythicMobs"
-  - "DreamFish"
-  - "LifeEssence"
-  - "CombatStamina"
+- "PlaceholderAPI"
+- "MVdWPlaceholderAPI"
+- "SkillAPI"
+- "MythicMobs"
+- "DreamFish"
+- "LifeEssence"
+- "CombatStamina"
 
 Hard_Dependency:
-  - "AgarthaLib"
+- "AgarthaLib"

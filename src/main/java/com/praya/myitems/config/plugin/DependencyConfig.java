@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.config.plugin;
 
 import com.praya.agarthalib.utility.FileUtil;
@@ -10,78 +6,81 @@ import com.praya.myitems.builder.handler.HandlerConfig;
 import com.praya.myitems.manager.plugin.DataManager;
 import com.praya.myitems.manager.plugin.PluginManager;
 import core.praya.agarthalib.enums.main.Dependency;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class DependencyConfig extends HandlerConfig {
-    private final HashMap<Dependency, Collection<String>> mapDependency;
+   private final HashMap<Dependency, Collection<String>> mapDependency = new HashMap();
 
-    public DependencyConfig(final MyItems plugin) {
-        super(plugin);
-        this.mapDependency = new HashMap<Dependency, Collection<String>>();
-    }
+   public DependencyConfig(MyItems plugin) {
+      super(plugin);
+   }
 
-    public final Collection<Dependency> getDependencyKeys() {
-        return this.mapDependency.keySet();
-    }
+   public final Collection<Dependency> getDependencyKeys() {
+      return this.mapDependency.keySet();
+   }
 
-    public final Collection<String> getDependency(final Dependency type) {
-        return this.mapDependency.containsKey(type) ? this.mapDependency.get(type) : new ArrayList<String>();
-    }
+   public final Collection<String> getDependency(Dependency type) {
+      return (Collection)(this.mapDependency.containsKey(type) ? (Collection)this.mapDependency.get(type) : new ArrayList());
+   }
 
-    public final boolean hasDependency(final Dependency type) {
-        return this.mapDependency.containsKey(type);
-    }
+   public final boolean hasDependency(Dependency type) {
+      return this.mapDependency.containsKey(type);
+   }
 
-    public final boolean hasAnyDependency() {
-        return !this.mapDependency.isEmpty();
-    }
+   public final boolean hasAnyDependency() {
+      return !this.mapDependency.isEmpty();
+   }
 
-    public final void setup() {
-        this.reset();
-        this.loadConfig();
-    }
+   public final void setup() {
+      this.reset();
+      this.loadConfig();
+   }
 
-    private final void reset() {
-        this.mapDependency.clear();
-    }
+   private final void reset() {
+      this.mapDependency.clear();
+   }
 
-    private final void loadConfig() {
-        final PluginManager pluginManager = this.plugin.getPluginManager();
-        final DataManager dataManager = pluginManager.getDataManager();
-        final String path = dataManager.getPath("Path_File_Dependency");
-        final FileConfiguration config = FileUtil.getFileConfigurationResource(this.plugin, path);
-        for (final String key : config.getKeys(false)) {
-            if (key.equalsIgnoreCase("Soft_Dependency") || key.equalsIgnoreCase("Soft_Dependencies")) {
-                if (config.isString(key)) {
-                    final Collection<String> dependencies = new ArrayList<String>();
-                    dependencies.add(config.getString(key));
-                    this.mapDependency.put(Dependency.SOFT_DEPENDENCY, dependencies);
-                } else {
-                    if (!config.isList(key)) {
-                        continue;
-                    }
-                    this.mapDependency.put(Dependency.SOFT_DEPENDENCY, config.getStringList(key));
-                }
-            } else {
-                if (!key.equalsIgnoreCase("Hard_Dependency") && !key.equalsIgnoreCase("Hard_Dependencies")) {
-                    continue;
-                }
-                if (config.isString(key)) {
-                    final Collection<String> dependencies = new ArrayList<String>();
-                    dependencies.add(config.getString(key));
-                    this.mapDependency.put(Dependency.HARD_DEPENDENCY, dependencies);
-                } else {
-                    if (!config.isList(key)) {
-                        continue;
-                    }
-                    this.mapDependency.put(Dependency.HARD_DEPENDENCY, config.getStringList(key));
-                }
+   private final void loadConfig() {
+      PluginManager pluginManager = this.plugin.getPluginManager();
+      DataManager dataManager = pluginManager.getDataManager();
+      String path = dataManager.getPath("Path_File_Dependency");
+      FileConfiguration config = FileUtil.getFileConfigurationResource(this.plugin, path);
+      Iterator var6 = config.getKeys(false).iterator();
+
+      while(true) {
+         String key;
+         ArrayList dependencies;
+         label35:
+         do {
+            while(var6.hasNext()) {
+               key = (String)var6.next();
+               if (!key.equalsIgnoreCase("Soft_Dependency") && !key.equalsIgnoreCase("Soft_Dependencies")) {
+                  continue label35;
+               }
+
+               if (config.isString(key)) {
+                  dependencies = new ArrayList();
+                  dependencies.add(config.getString(key));
+                  this.mapDependency.put(Dependency.SOFT_DEPENDENCY, dependencies);
+               } else if (config.isList(key)) {
+                  this.mapDependency.put(Dependency.SOFT_DEPENDENCY, config.getStringList(key));
+               }
             }
-        }
-    }
+
+            return;
+         } while(!key.equalsIgnoreCase("Hard_Dependency") && !key.equalsIgnoreCase("Hard_Dependencies"));
+
+         if (config.isString(key)) {
+            dependencies = new ArrayList();
+            dependencies.add(config.getString(key));
+            this.mapDependency.put(Dependency.HARD_DEPENDENCY, dependencies);
+         } else if (config.isList(key)) {
+            this.mapDependency.put(Dependency.HARD_DEPENDENCY, config.getStringList(key));
+         }
+      }
+   }
 }

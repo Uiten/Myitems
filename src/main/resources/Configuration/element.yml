@@ -46,7 +46,7 @@ Fire:
     Water: -1.5
     Nature: 2
     Wind: -1
-
+ 
 Water:
   Keylore: "&cWater Element"
   Scale_Base_Additional_Damage: 0.05
@@ -66,7 +66,7 @@ Water:
     Water: -1
     Nature: 0.5
     Wind: -2
-
+   
 Nature:
   Keylore: "&cNature Element"
   Scale_Base_Additional_Damage: 0.04
@@ -84,9 +84,9 @@ Nature:
   Resistance:
     Fire: -2
     Water: 2
-    Nature: 1
+    Nature: 1    
     Wind: 0.2
-
+   
 Wind:
   Keylore: "&cWind Element"
   Scale_Base_Additional_Damage: 0.03

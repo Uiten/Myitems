@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.listener.support;
 
 import api.praya.agarthalib.builder.event.PlayerHealthMaxChangeEvent;
@@ -20,26 +16,29 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 public class ListenerPlayerHealthMaxChange extends HandlerEvent implements Listener {
-    public ListenerPlayerHealthMaxChange(final MyItems plugin) {
-        super(plugin);
-    }
+   public ListenerPlayerHealthMaxChange(MyItems plugin) {
+      super(plugin);
+   }
 
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void eventPlayerHealthMaxChange(final PlayerHealthMaxChangeEvent event) {
-        final GameManager gameManager = this.plugin.getGameManager();
-        final LoreStatsManager statsManager = gameManager.getStatsManager();
-        final SocketManager socketManager = gameManager.getSocketManager();
-        final MainConfig mainConfig = MainConfig.getInstance();
-        final boolean enableMaxHealth = mainConfig.isStatsEnableMaxHealth();
-        if (!event.isCancelled() && enableMaxHealth) {
-            final Player player = event.getPlayer();
-            final LoreStatsArmor statsBuild = statsManager.getLoreStatsArmor(player);
-            final SocketGemsProperties socketBuild = socketManager.getSocketProperties(player);
-            final double healthStats = statsBuild.getHealth();
-            final double healthSocket = socketBuild.getHealth();
-            final double healthBase = event.getMaxHealth();
-            final double healthResult = healthStats + healthSocket + healthBase;
-            event.setMaxHealth(healthResult);
-        }
-    }
+   @EventHandler(
+      priority = EventPriority.NORMAL
+   )
+   public void eventPlayerHealthMaxChange(PlayerHealthMaxChangeEvent event) {
+      GameManager gameManager = this.plugin.getGameManager();
+      LoreStatsManager statsManager = gameManager.getStatsManager();
+      SocketManager socketManager = gameManager.getSocketManager();
+      MainConfig mainConfig = MainConfig.getInstance();
+      boolean enableMaxHealth = mainConfig.isStatsEnableMaxHealth();
+      if (!event.isCancelled() && enableMaxHealth) {
+         Player player = event.getPlayer();
+         LoreStatsArmor statsBuild = statsManager.getLoreStatsArmor((LivingEntity)player);
+         SocketGemsProperties socketBuild = socketManager.getSocketProperties((LivingEntity)player);
+         double healthStats = statsBuild.getHealth();
+         double healthSocket = socketBuild.getHealth();
+         double healthBase = event.getMaxHealth();
+         double healthResult = healthStats + healthSocket + healthBase;
+         event.setMaxHealth(healthResult);
+      }
+
+   }
 }

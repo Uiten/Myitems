@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package com.praya.myitems.builder.ability.weapon;
 
 import api.praya.myitems.builder.ability.AbilityWeapon;
@@ -17,97 +13,94 @@ import com.praya.myitems.manager.game.GameManager;
 import core.praya.agarthalib.bridge.unity.Bridge;
 import core.praya.agarthalib.enums.branch.ParticleEnum;
 import core.praya.agarthalib.enums.branch.SoundEnum;
+import java.util.Collection;
+import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Collection;
-import java.util.List;
-
 public class AbilityWeaponBadLuck extends AbilityWeapon implements AbilityWeaponAttributeBaseDamage, AbilityWeaponAttributeEffect {
-    private static final String ABILITY_ID = "Bad_Luck";
+   private static final String ABILITY_ID = "Bad_Luck";
 
-    private AbilityWeaponBadLuck(final MyItems plugin, final String id) {
-        super(plugin, id);
-    }
+   private AbilityWeaponBadLuck(MyItems plugin, String id) {
+      super(plugin, id);
+   }
 
-    public static final AbilityWeaponBadLuck getInstance() {
-        return AbilityWeaponBadLuckHelper.instance;
-    }
+   public static final AbilityWeaponBadLuck getInstance() {
+      return AbilityWeaponBadLuck.AbilityWeaponBadLuckHelper.instance;
+   }
 
-    @Override
-    public String getKeyLore() {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        return mainConfig.getAbilityWeaponIdentifierBadLuck();
-    }
+   public String getKeyLore() {
+      MainConfig mainConfig = MainConfig.getInstance();
+      return mainConfig.getAbilityWeaponIdentifierBadLuck();
+   }
 
-    @Override
-    public List<String> getDescription() {
-        return null;
-    }
+   public List<String> getDescription() {
+      return null;
+   }
 
-    @Override
-    public int getMaxGrade() {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Bad_Luck");
-        return abilityWeaponProperties.getMaxGrade();
-    }
+   public int getMaxGrade() {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Bad_Luck");
+      return abilityWeaponProperties.getMaxGrade();
+   }
 
-    @Override
-    public double getBaseBonusDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Bad_Luck");
-        final double baseBonusDamage = grade * abilityWeaponProperties.getScaleBaseBonusDamage();
-        return baseBonusDamage;
-    }
+   public double getBaseBonusDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Bad_Luck");
+      double baseBonusDamage = (double)grade * abilityWeaponProperties.getScaleBaseBonusDamage();
+      return baseBonusDamage;
+   }
 
-    @Override
-    public double getBasePercentDamage(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Bad_Luck");
-        final double basePercentDamage = grade * abilityWeaponProperties.getScaleBasePercentDamage();
-        return basePercentDamage;
-    }
+   public double getBasePercentDamage(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Bad_Luck");
+      double basePercentDamage = (double)grade * abilityWeaponProperties.getScaleBasePercentDamage();
+      return basePercentDamage;
+   }
 
-    @Override
-    public int getEffectDuration(final int grade) {
-        final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-        final GameManager gameManager = plugin.getGameManager();
-        final AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
-        final AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Bad_Luck");
-        return abilityWeaponProperties.getTotalDuration(grade);
-    }
+   public int getEffectDuration(int grade) {
+      MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+      GameManager gameManager = plugin.getGameManager();
+      AbilityWeaponManager abilityWeaponManager = gameManager.getAbilityWeaponManager();
+      AbilityWeaponProperties abilityWeaponProperties = abilityWeaponManager.getAbilityWeaponProperties("Bad_Luck");
+      return abilityWeaponProperties.getTotalDuration(grade);
+   }
 
-    @Override
-    public void cast(final Entity caster, final Entity target, final int grade, final double damage) {
-        final MainConfig mainConfig = MainConfig.getInstance();
-        if (target instanceof LivingEntity) {
-            final LivingEntity victims = (LivingEntity) target;
-            final Location location = victims.getEyeLocation();
-            final int duration = this.getEffectDuration(grade);
-            final Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
-            Bridge.getBridgeParticle().playParticle(players, ParticleEnum.VILLAGER_ANGRY, location, 25, 0.5, 0.5, 0.5, 0.5);
-            Bridge.getBridgeSound().playSound(players, location, SoundEnum.ENTITY_VILLAGER_NO, 0.7f, 1.0f);
-            CombatUtil.applyPotion(victims, PotionEffectType.UNLUCK, duration, grade);
-        }
-    }
+   public void cast(Entity caster, Entity target, int grade, double damage) {
+      MainConfig mainConfig = MainConfig.getInstance();
+      if (target instanceof LivingEntity) {
+         LivingEntity victims = (LivingEntity)target;
+         Location location = victims.getEyeLocation();
+         int duration = this.getEffectDuration(grade);
+         Collection<Player> players = PlayerUtil.getNearbyPlayers(location, mainConfig.getEffectRange());
+         Bridge.getBridgeParticle().playParticle(players, ParticleEnum.VILLAGER_ANGRY, location, 25, 0.5D, 0.5D, 0.5D, 0.5D);
+         Bridge.getBridgeSound().playSound(players, location, SoundEnum.ENTITY_VILLAGER_NO, 0.7F, 1.0F);
+         CombatUtil.applyPotion(victims, PotionEffectType.UNLUCK, duration, grade);
+      }
 
-    private static class AbilityWeaponBadLuckHelper {
-        private static final AbilityWeaponBadLuck instance;
+   }
 
-        static {
-            final MyItems plugin = (MyItems) JavaPlugin.getPlugin((Class) MyItems.class);
-            instance = new AbilityWeaponBadLuck(plugin, "Bad_Luck");
-        }
-    }
+   // $FF: synthetic method
+   AbilityWeaponBadLuck(MyItems var1, String var2, AbilityWeaponBadLuck var3) {
+      this(var1, var2);
+   }
+
+   private static class AbilityWeaponBadLuckHelper {
+      private static final AbilityWeaponBadLuck instance;
+
+      static {
+         MyItems plugin = (MyItems)JavaPlugin.getPlugin(MyItems.class);
+         instance = new AbilityWeaponBadLuck(plugin, "Bad_Luck", (AbilityWeaponBadLuck)null);
+      }
+   }
 }
